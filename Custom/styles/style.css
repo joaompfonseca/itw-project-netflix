@@ -1,4 +1,10 @@
-﻿.jumbotron {
+﻿/*.body {
+    margin: 10px;
+    font-family: 'Open Sans';
+    background-color: black;
+}
+
+.jumbotron {
     margin: 0px;
     padding: 0px;
     height: 300px;
@@ -8,10 +14,4 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-color: black;
-}
-
-.body {
-    margin: 10px;
-    font-family: 'Open Sans';
-    background-color: black;
-}
+}*/
