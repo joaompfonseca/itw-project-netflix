@@ -4,14 +4,16 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href=""
+    <link href="Scripts/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="fonts\font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="Scripts/css/bootstrap.css" rel="stylesheet" />
+    <link href="Custom/styles/style.css" rel="stylesheet" />
 </head>
 <body>
     <div>
         <nav class="navbar navbar-expand-md navbar-dark">
             <a class="navbar-brand" href="Netflix.html">
-                <img src="netflix-logo.png" width="256" lenght="256" />
+                <img src="Custom/images/netflix.png" height="50" margin-right="20" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,10 +21,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Produtos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contactos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Séries</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Filmes</a></li>
+                    <li class="nav-item last-child"><a class="nav-link" href="#">Search</a></li>
                 </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </div>
         </nav> 
     </div>
