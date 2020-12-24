@@ -78,6 +78,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Custom\images\sep.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="index.html" />
     <Content Include="Netflix\index.html" />
     <Content Include="Custom\images\nav.png" />
     <Content Include="Netflix\index.js" />
