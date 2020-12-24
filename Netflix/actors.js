@@ -5,6 +5,7 @@
         self.actor = ko.observable()
 
         $.ajax({
+            type: "GET",
             url: "http://192.168.160.58/netflix/api/Actors",
             success: function (data) {
                 console.log(data)
