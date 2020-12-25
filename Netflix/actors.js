@@ -2,11 +2,10 @@
     function ViewModel() {
         //Vars
         var self = this;
-        var uri = "http://192.168.160.58/netflix/api/Actors";
+        var load = false;
 
         //Arrays
         pages = [];
-
         pagesizes = [
             { number: "10", value: 10 },
             { number: "25", value: 25 },
@@ -17,6 +16,9 @@
         ];
 
         //Binds
+        self.Type = ko.observable("Pesquisar atores...");
+        self.Unlock = ko.observable(true);
+        self.Query = ko.observable();
         self.Actors = ko.observable();
         self.TotalActors = ko.observable();
         self.Pages = ko.observable();
@@ -30,21 +32,27 @@
 
         self.NextPage = function () {
             self.CurrentPage(self.CurrentPage() + 1);
-            self.Update();
+            self.UpdateList();
         };
         self.PreviousPage = function () {
             self.CurrentPage(self.CurrentPage() - 1);
-            self.Update();
+            self.UpdateList();
         };
         self.FirstPage = function () {
             self.CurrentPage(1);
-            self.Update();
-        }
+            self.UpdateList();
+        };
         self.LastPage = function () {
             self.CurrentPage(self.TotalPages());
-            self.Update();
-        }
-        //Load Table
+            self.UpdateList();
+        };
+        self.Refresh = function () {
+            self.Query("");
+            self.Unlock(true);
+            self.UpdateList();
+        };
+
+        //Load Actors List
         $.ajax({
             url: "http://192.168.160.58/netflix/api/Actors?page=1&pagesize=10",
             success: function (data) {
@@ -52,6 +60,7 @@
                 self.Actors(data.Actors);
                 self.TotalActors(data.TotalActors);
                 self.TotalPages(data.TotalPages);
+                self.CurrentPage(data.CurrentPage);
                 self.HasPrevious(data.HasPrevious);
                 self.HasNext(data.HasNext);
 
@@ -62,32 +71,49 @@
             }
         });
 
+        //Update Actors List
+        self.UpdateList = function () {
+            if (load) {
+                pages = [];
+                var page = self.CurrentPage();
+                var pagesize = self.PageSize();
+                var uri = 'http://192.168.160.58/netflix/api/Actors?page=' + page + '&pagesize=' + pagesize;
+                $.ajax({
+                    url: uri,
+                    success: function (data) {
+                        console.log(data);
+                        self.Actors(data.Actors);
+                        self.TotalPages(data.TotalPages);
+                        self.HasPrevious(data.HasPrevious);
+                        self.HasNext(data.HasNext);
 
-        //Update Table
-        self.Update = function () {
-            var page = self.CurrentPage();
-            var pagesize = self.PageSize();
-            uri = uri + '?page=' + page + '&pagesize=' + pagesize;
-            pages = [];
-            $.ajax({
-                url: uri,
-                success: function (data) {
-                    console.log(data);
-                    self.Actors(data.Actors);
-                    self.TotalPages(data.TotalPages);
-                    self.HasPrevious(data.HasPrevious);
-                    self.HasNext(data.HasNext);
-
-                    for (i = 1; i <= self.TotalPages(); i++) {
-                        pages.push({ number: i.toString(), value: i });
+                        for (i = 1; i <= self.TotalPages(); i++) {
+                            pages.push({ number: i.toString(), value: i });
+                        }
+                        self.Pages(pages);
                     }
-                    self.Pages(pages);
-                }
-            })
-            uri = "http://192.168.160.58/netflix/api/Actors";
-        }
+                });
+            };
+            load = true
+        };
 
-        
+        //Update Actors Search
+        self.UpdateSearch = function () {
+            if (load) {
+                self.Unlock(false);
+                var q = self.Query();
+                var uri = 'http://192.168.160.58/netflix/api/Search/Actors?name=' + q;
+                $.ajax({
+                    url: uri,
+                    success: function (data) {
+                        console.log(data);
+                        self.Actors(data);
+                    }
+                });
+            };
+            load = true
+        };
     }
     ko.applyBindings(ViewModel());
-})
+    console.log("Finished Loading!");
+});

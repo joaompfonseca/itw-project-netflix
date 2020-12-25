@@ -32,9 +32,9 @@
                     <li class="nav-item active"><a class="nav-link" href="actors.html">Atores</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" id="search" placeholder="Pesquisar ator, filme...">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+                <form class="form-inline my-2">
+                    <input class="form-control w-auto mr-sm-2" data-bind="value: Query, attr: {placeholder: Type}">
+                    <button class="btn btn-outline-success " type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}"><i class="fa fa-search"></i></button>
                 </form>
             </div>
         </div>
@@ -46,30 +46,33 @@
                 <div class="col-12 col-sm-3">
                     <h4>Lista de Atores (<span data-bind="text: TotalActors"></span>)</h4>
                 </div>
-                <div class="col-12 col-sm-9 d-flex justify-content-end mb-2">
-                    <div class="form-inline justify-content-end">
+                <div class="col-12 col-sm-9 d-flex justify-content-end">
+                    <div class="form-inline justify-content-end mb-2">
                         <div class="col-12 col-sm-auto form-inline justify-content-end">
                             <label class="mx-2 mb-2 col-form-label">Página</label>
-                            <button class="btn btn-outline-light mb-2" data-bind="visible: HasPrevious, event: {click: FirstPage}">1</button>
-                            <button class="btn btn-outline-light mb-2" data-bind="event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
-                            <select data-bind="options: Pages,
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, visible: HasPrevious, event: {click: FirstPage}">1</button>
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
+                            <select data-bind="enable: Unlock, 
+                                options: Pages,
                                 selectedOptions: CurrentPage,
                                 optionsText: 'number',
                                 optionsValue: 'value',
                                 value: CurrentPage,
-                                event: {change: Update}" class="mb-2 bg-transparent text-white form-control"></select>
-                            <button class="btn btn-outline-light mb-2" data-bind="event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
-                            <button class="btn btn-outline-light mb-2" data-bind="visible: HasNext, text: TotalPages, event:{click: LastPage}"></button>
+                                event: {change: UpdateList}" class="mb-2 bg-transparent text-white form-control"></select>
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, visible: HasNext, text: TotalPages, event:{click: LastPage}"></button>
                         </div>
                         <div class="col-12 col-sm-auto form-inline justify-content-end">
                             <label class="mx-2 mb-2 col-form-label">Tamanho</label>
-                            <select data-bind="options: pagesizes,
+                            <select data-bind="enable: Unlock, 
+                                options: pagesizes,
                                 selectedOptions: PageSize,
                                 optionsText: 'number',
                                 optionsValue: 'value',
                                 value: PageSize,
-                                event: {change: Update}" class="mb-2 bg-transparent text-white form-control">
+                                event: {change: UpdateList}" class="mb-2 bg-transparent text-white form-control">
                             </select>
+                            <button class="btn btn-outline-primary mb-2 ml-1" data-bind="enable: !Unlock(), event: {click: Refresh}"><i class="fa fa-refresh"></i></button>
                         </div>
                     </div>
                 </div>
