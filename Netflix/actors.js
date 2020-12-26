@@ -6,6 +6,7 @@
 
         //Arrays
         pages = [];
+        ids = [];
         pagesizes = [
             { number: "10", value: 10 },
             { number: "25", value: 25 },
@@ -56,17 +57,17 @@
         $.ajax({
             url: "http://192.168.160.58/netflix/api/Actors?page=1&pagesize=10",
             success: function (data) {
-                console.log(data);
                 self.Actors(data.Actors);
                 self.TotalActors(data.TotalActors);
                 self.TotalPages(data.TotalPages);
                 self.CurrentPage(data.CurrentPage);
+                self.PageSize(data.PageSize);
                 self.HasPrevious(data.HasPrevious);
                 self.HasNext(data.HasNext);
 
                 for (i = 1; i <= self.TotalPages(); i++) {
                     pages.push({ number: i.toString(), value: i });
-                }
+                };
                 self.Pages(pages);
             }
         });
@@ -81,7 +82,6 @@
                 $.ajax({
                     url: uri,
                     success: function (data) {
-                        console.log(data);
                         self.Actors(data.Actors);
                         self.TotalPages(data.TotalPages);
                         self.HasPrevious(data.HasPrevious);
@@ -99,21 +99,39 @@
 
         //Update Actors Search
         self.UpdateSearch = function () {
-            if (load) {
+            if (load && self.Query() == '') {
+                self.Refresh();
+            }
+            if (load && self.Query().length > 2) {
                 self.Unlock(false);
                 var q = self.Query();
                 var uri = 'http://192.168.160.58/netflix/api/Search/Actors?name=' + q;
                 $.ajax({
                     url: uri,
                     success: function (data) {
-                        console.log(data);
                         self.Actors(data);
                     }
                 });
             };
-            load = true
+            load = true;
         };
     }
     ko.applyBindings(ViewModel());
-    console.log("Finished Loading!");
+
+    //Search Autocomplete
+    $.getJSON('http://192.168.160.58/netflix/api/Actors?page=1&pagesize=27391')
+        .done(function (data) {
+            tips = [];
+            lst = data.Actors;
+            i = 0;
+            while (tips.length != 27391) {
+                tips.push(lst[i].Name);
+                i++;
+            }
+            $("#search").autocomplete({
+                delay: 0,
+                minLength: 3,
+                source: tips
+            });
+        });
 });
