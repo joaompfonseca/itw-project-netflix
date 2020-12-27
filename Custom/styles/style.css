@@ -7,6 +7,14 @@ main {
     margin: 100px 0 100px 0;
 }
 
+button{
+    margin-left: 5px;
+}
+
+a{
+    margin-left: 5px;
+}
+
 .custom-nav-img {
     max-height: 2em;
 }
