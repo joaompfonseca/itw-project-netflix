@@ -10,9 +10,12 @@
     <title>Netflix - Atores</title>
 
     <!--Estilos-->
-    <!--Bootstrap--><link rel="stylesheet" href="../Content/bootstrap.min.css" />
-    <!--Font Awesome--><link rel="stylesheet" href="../Content/font-awesome.min.css" />
-    <!--jQueryUI--><link rel="stylesheet" href="../Content/themes/base/jquery-ui.min.css" />
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="../Content/bootstrap.min.css" />
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="../Content/font-awesome.min.css" />
+    <!--jQueryUI-->
+    <link rel="stylesheet" href="../Content/themes/base/jquery-ui.min.css" />
 
     <link rel="stylesheet" href="../Custom/styles/style.css" />
 </head>
@@ -29,8 +32,8 @@
             <div class="collapse navbar-collapse" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="actors.html">Atores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="titles.html">Filmes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="actors.html">Atores</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="titles.html">Filmes</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
                 <form class="form-inline my-2">
@@ -45,7 +48,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-3">
-                    <h4>Lista de Atores (<span id="total" data-bind="text: TotalActors"></span>)</h4>
+                    <h4>Lista de Títulos (<span id="total" data-bind="text: TotalTitles"></span>)</h4>
                 </div>
                 <div class="col-12 col-sm-9 d-flex justify-content-end">
                     <div class="form-inline justify-content-end mb-2">
@@ -53,7 +56,7 @@
                             <label class="mx-2 mb-2 col-form-label">Página</label>
                             <button class="btn btn-outline-light mb-2" title="First Page" data-bind="enable: Unlock, visible: HasPrevious, event: {click: FirstPage}">1</button>
                             <button class="btn btn-outline-light mb-2" title="Next Page" data-bind="enable: Unlock, event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
-                            <select data-bind="enable: Unlock, 
+                            <select data-bind="enable: Unlock,
                                 options: Pages,
                                 selectedOptions: CurrentPage,
                                 optionsText: 'number',
@@ -61,11 +64,11 @@
                                 value: CurrentPage,
                                 event: {change: UpdateList}" class="mb-2 bg-transparent text-white form-control"></select>
                             <button class="btn btn-outline-light mb-2" title="Previous Page" data-bind="enable: Unlock, event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
-                            <button class="btn btn-outline-light mb-2" title="Last Page" data-bind="enable: Unlock, visible: HasNext, text: TotalPages, event:{click: LastPage}">2740</button>
+                            <button class="btn btn-outline-light mb-2" title="Last Page" data-bind="enable: Unlock, visible: HasNext, text: TotalPages, event:{click: LastPage}"></button>
                         </div>
                         <div class="col-12 col-sm-auto form-inline justify-content-end">
                             <label class="mx-2 mb-2 col-form-label">Tamanho</label>
-                            <select data-bind="enable: Unlock, 
+                            <select data-bind="enable: Unlock,
                                 options: pagesizes,
                                 selectedOptions: PageSize,
                                 optionsText: 'number',
@@ -84,23 +87,23 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Títulos</th>
+                        <th scope="col">Filme</th>
+                        <th scope="col">Data</th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody data-bind="foreach: Actors">  
+                <tbody data-bind="foreach: Titles">
                     <tr>
                         <td data-bind="text: Id"></td>
                         <td data-bind="text: Name"></td>
-                        <td data-bind="text: Titles"></td>
+                        <td data-bind="text: Duration"></td>
                         <td class="form-inline justify-content-end">
-                            <a class="btn btn-outline-light small" data-bind="attr: {href: 'actorDetails.html?id=' + Id}" title="Selecione para ver detalhes"><i class="fa fa-eye"></i></a>
+                            <a class="btn btn-outline-light small" data-bind="attr: {href:'./titleDetails.html?id=' + Id }" title="Selecione para ver detalhes"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-outline-light small" data-bind="attr: {href: 'actorFavorites.html?id=' + Id}" title="Selecione para adicionar aos favoritos"><i class="fa fa-heart"></i></a>
                         </td>
                     </tr>
-                </tbody>                                                                                       
-            </table>                               
+                </tbody>
+            </table>
         </div>
     </main>
     <!--Footer-->
@@ -114,10 +117,9 @@
     </nav>
     <!--Scripts-->
     <script src="../Scripts/jquery-3.5.1.min.js"></script>
-    <script src="../Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="../Scripts/knockout-3.5.1.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
 
-    <script src="actors.js"></script>
+    <script src="titles.js"></script>
 </body>
 </html>
