@@ -1,137 +1,147 @@
-﻿$(document).ready(function () {
-    function ViewModel() {
-        //Vars
-        var self = this;
-        var load = false;
+﻿var vm = function (dataType, dataText) {
+    var self = this;
 
-        //Arrays
-        pages = [];
-        ids = [];
-        pagesizes = [
-            { number: "10", value: 10 },
-            { number: "25", value: 25 },
-            { number: "50", value: 50 },
-            { number: "100", value: 100 },
-            { number: "250", value: 250 },
-            { number: "500", value: 500 }
-        ];
+    //-----Arrays
+    pagesizes = [
+        { number: "10", value: 10 },
+        { number: "25", value: 25 },
+        { number: "50", value: 50 },
+        { number: "100", value: 100 },
+        { number: "250", value: 250 },
+        { number: "500", value: 500 }
+    ];
 
-        //Binds
-        self.Type = ko.observable("Pesquisar atores...");
-        self.Unlock = ko.observable(true);
-        self.Query = ko.observable();
-        self.Actors = ko.observable();
-        self.TotalActors = ko.observable();
-        self.Pages = ko.observable();
-        self.TotalPages = ko.observable();
-        self.CurrentPage = ko.observable();
-        self.PageSize = ko.observable();
-        self.HasPrevious = ko.observable();
-        self.HasNext = ko.observable();
-        self.FirstPage = ko.observable();
-        self.LastPage = ko.observable();
+    //-----Binds
+    //Basic
+    self.DataType = ko.observable(dataType);
+    self.DataText = ko.observable(dataText);
+    self.Unlock = ko.observable(true);
+    self.Query = ko.observable('');
+    self.Type = ko.observable();
+    self.TotalType = ko.observable();
+    self.Pages = ko.observable();
+    self.TotalPages = ko.observable();
+    self.CurrentPage = ko.observable();
+    self.PageSize = ko.observable();
+    self.HasPrevious = ko.observable();
+    self.HasNext = ko.observable();
+    self.NextPage = function () {
+        self.CurrentPage(self.CurrentPage() + 1);
+        self.UpdateList();
+    };
+    self.PreviousPage = function () {
+        self.CurrentPage(self.CurrentPage() - 1);
+        self.UpdateList();
+    };
+    self.FirstPage = function () {
+        self.CurrentPage(1);
+        self.UpdateList();
+    };
+    self.LastPage = function () {
+        self.CurrentPage(self.TotalPages());
+        self.UpdateList();
+    };
+    self.Refresh = function () {
+        self.Unlock(true);
+        self.UpdateList();
+    };
 
-        self.NextPage = function () {
-            self.CurrentPage(self.CurrentPage() + 1);
-            self.UpdateList();
-        };
-        self.PreviousPage = function () {
-            self.CurrentPage(self.CurrentPage() - 1);
-            self.UpdateList();
-        };
-        self.FirstPage = function () {
-            self.CurrentPage(1);
-            self.UpdateList();
-        };
-        self.LastPage = function () {
-            self.CurrentPage(self.TotalPages());
-            self.UpdateList();
-        };
-        self.Refresh = function () {
-            self.Query("");
-            self.Unlock(true);
-            self.UpdateList();
-        };
+    //Update dataType Listing
+    self.UpdateList = function () {
+        var page = self.CurrentPage();
+        var pageSize = self.PageSize();
+        if (page == undefined || pageSize == undefined) { page = '1'; pageSize = '10'; };
+        var url = 'http://192.168.160.58/netflix/api/' + dataType + '?page=' + page + '&pagesize=' + pageSize;
 
-        //Load Actors List
-        $.ajax({
-            url: "http://192.168.160.58/netflix/api/Actors?page=1&pagesize=10",
-            success: function (data) {
-                self.Actors(data.Actors);
-                self.TotalActors(data.TotalActors);
+        //Pedido AJAX
+        console.log("LIST: página " + page + ", tamanho " + pageSize + "...");
+        $.getJSON(url)
+            .done(function (data) {
+                self.TotalType(data['Total' + dataType])
                 self.TotalPages(data.TotalPages);
-                self.CurrentPage(data.CurrentPage);
-                self.PageSize(data.PageSize);
                 self.HasPrevious(data.HasPrevious);
                 self.HasNext(data.HasNext);
+                self.Type(data[dataType]);
 
+                var pages = [];
                 for (i = 1; i <= self.TotalPages(); i++) {
                     pages.push({ number: i.toString(), value: i });
                 };
                 self.Pages(pages);
-            }
-        });
 
-        //Update Actors List
-        self.UpdateList = function () {
-            if (load) {
-                pages = [];
-                var page = self.CurrentPage();
-                var pagesize = self.PageSize();
-                var uri = 'http://192.168.160.58/netflix/api/Actors?page=' + page + '&pagesize=' + pagesize;
-                $.ajax({
-                    url: uri,
-                    success: function (data) {
-                        self.Actors(data.Actors);
-                        self.TotalPages(data.TotalPages);
-                        self.HasPrevious(data.HasPrevious);
-                        self.HasNext(data.HasNext);
-
-                        for (i = 1; i <= self.TotalPages(); i++) {
-                            pages.push({ number: i.toString(), value: i });
-                        }
-                        self.Pages(pages);
-                    }
-                });
-            };
-            load = true
-        };
-
-        //Update Actors Search
-        self.UpdateSearch = function () {
-            if (load && self.Query() == '') {
-                self.Refresh();
-            }
-            if (load && self.Query().length > 2) {
-                self.Unlock(false);
-                var q = self.Query();
-                var uri = 'http://192.168.160.58/netflix/api/Search/Actors?name=' + q;
-                $.ajax({
-                    url: uri,
-                    success: function (data) {
-                        self.Actors(data);
-                    }
-                });
-            };
-            load = true;
-        };
-    }
-    ko.applyBindings(ViewModel());
-
-    //Search Autocomplete
-    $.getJSON('http://192.168.160.58/netflix/api/Actors?page=1&pagesize=27391')
-        .done(function (data) {
-            tips = [];
-            lst = data.Actors;
-            i = 0;
-            while (tips.length != 27391) {
-                tips.push(lst[i].Name);
-                i++;
-            }
-            $("#search").autocomplete({
-                delay: 0,
-                minLength: 3,
-                source: tips
+                console.log("LIST: DONE!");
+            })
+            .fail(function () {
+                console.log("LIST: FAIL!");
             });
-        });
+    };
+
+    //Update dataType Search
+    self.UpdateSearch = function () {
+        if (self.Query().length > 2) {
+            self.Unlock(false);
+            var q = self.Query();
+            var url = 'http://192.168.160.58/netflix/api/Search/' + dataType + '?name=' + q;
+
+            //Pedido AJAX
+            console.log("SEARCH: termo '" + q + "'...");
+            $.getJSON(url)
+                .done(function (data) {
+                    self.Type(data);
+
+                    console.log("SEARCH: DONE!");
+                })
+                .fail(function () {
+                    console.log("SEARCH: FAIL!");
+                });
+;
+        };
+    };
+
+    //-----Load Inicial
+    console.log("INFO: A primeira listagem dos dados é duplicada devido ao modo como a página funciona..."); console.log("");
+    self.UpdateList();
+}
+
+$(document).ready(function () {
+
+    //-----Autocomplete
+    autocomplete = function (dataType, totalPages) {
+        var url = 'http://192.168.160.58/netflix/api/' + dataType + '?page=1&pagesize=' + totalPages;
+
+        //Pedido AJAX
+        console.log("AUTO: " + totalPages + " sugestões...");
+        $.getJSON(url)
+            .done(function (data) {
+                var lst = data[dataType];
+                tips = [];
+                for (i = 0; i < totalPages; i++) {
+                    tips.push(lst[i].Name);
+                }
+                $("#search").autocomplete({
+                    delay: 0,
+                    minLength: 3,
+                    source: tips
+                });
+
+                console.log("AUTO: DONE!"); console.log("");
+                console.log("INFO: DOCUMENT LOADED!");
+            })
+            .fail(function () {
+                console.log("AUTO: FAIL!")
+            });
+    };
+
+    console.log("INFO: DOCUMENT READY!"); console.log("");
+
+    //----------VALORES A ALTERAR QUANDO MUDAR O TIPO DE PÁGINA!!!----------//
+    var dataType = 'Actors';   //Tipo de Dados
+    var dataText = 'Atores';   //Texto Visível
+    var totalPages = '27391';  //Número de Elementos Autocomplete
+    console.log("INFO: Tipo de dados: " + dataType);
+    console.log("INFO: Modo de apresentação: " + dataText); console.log("");
+    //---------------------------------------------------------------------//
+    ko.applyBindings(new vm(dataType, dataText));
+    autocomplete(dataType, totalPages);
+
 });

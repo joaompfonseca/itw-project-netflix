@@ -34,8 +34,8 @@
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
                 <form class="form-inline my-2">
-                    <input class="form-control w-auto mr-2" id="search" type="search" data-bind="value: Query, attr: {placeholder: Type}, event: {change: UpdateSearch}">
-                    <button class="btn btn-outline-success" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}"><i class="fa fa-search"></i></button>
+                    <input class="form-control w-auto" id="search" type="search" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase()}">
+                    <button class="btn btn-outline-success ml-1" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}"><i class="fa fa-search"></i></button>
                 </form>
             </div>
         </div>
@@ -45,23 +45,23 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-3">
-                    <h4>Lista de Atores (<span id="total" data-bind="text: TotalActors"></span>)</h4>
+                    <h4 data-bind="text: 'Lista de ' + DataText() + ' (' + TotalType() + ')'"></h4>
                 </div>
                 <div class="col-12 col-sm-9 d-flex justify-content-end">
                     <div class="form-inline justify-content-end mb-2">
                         <div class="col-12 col-sm-auto form-inline justify-content-end">
                             <label class="mx-2 mb-2 col-form-label">Página</label>
                             <button class="btn btn-outline-light mb-2" title="First Page" data-bind="enable: Unlock, visible: HasPrevious, event: {click: FirstPage}">1</button>
-                            <button class="btn btn-outline-light mb-2" title="Next Page" data-bind="enable: Unlock, event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
+                            <button class="btn btn-outline-light mb-2 ml-1" title="Next Page" data-bind="enable: Unlock, event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
                             <select data-bind="enable: Unlock, 
                                 options: Pages,
                                 selectedOptions: CurrentPage,
                                 optionsText: 'number',
                                 optionsValue: 'value',
                                 value: CurrentPage,
-                                event: {change: UpdateList}" class="mb-2 bg-transparent text-white form-control"></select>
-                            <button class="btn btn-outline-light mb-2" title="Previous Page" data-bind="enable: Unlock, event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
-                            <button class="btn btn-outline-light mb-2" title="Last Page" data-bind="enable: Unlock, visible: HasNext, text: TotalPages, event:{click: LastPage}">2740</button>
+                                event: {change: UpdateList}" class="mb-2 ml-1 bg-transparent text-white form-control"></select>
+                            <button class="btn btn-outline-light mb-2 ml-1" title="Previous Page" data-bind="enable: Unlock, event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
+                            <button class="btn btn-outline-light mb-2 ml-1" title="Last Page" data-bind="enable: Unlock, visible: HasNext, text: TotalPages, event:{click: LastPage}"></button>
                         </div>
                         <div class="col-12 col-sm-auto form-inline justify-content-end">
                             <label class="mx-2 mb-2 col-form-label">Tamanho</label>
@@ -89,14 +89,14 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody data-bind="foreach: Actors">  
+                <tbody data-bind="foreach: Type">  
                     <tr>
-                        <td data-bind="text: Id"></td>
-                        <td data-bind="text: Name"></td>
-                        <td data-bind="text: Titles"></td>
+                        <td class="align-text-bottom" data-bind="text: Id"></td>
+                        <td class="align-text-bottom" data-bind="text: Name"></td>
+                        <td class="align-text-bottom" data-bind="text: Titles"></td>
                         <td class="form-inline justify-content-end">
-                            <a class="btn btn-outline-light small" data-bind="attr: {href: 'actorDetails.html?id=' + Id}" title="Selecione para ver detalhes"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-outline-light small" data-bind="attr: {href: 'actorFavorites.html?id=' + Id}" title="Selecione para adicionar aos favoritos"><i class="fa fa-heart"></i></a>
+                            <a class="btn btn-outline-light" data-bind="attr: {href: 'actorDetails.html?id=' + Id}" title="Selecione para ver detalhes"><i class="fa fa-eye"></i></a>
+                            <a class="btn btn-outline-light ml-1" data-bind="attr: {href: 'actorFavorites.html?id=' + Id}" title="Selecione para adicionar aos favoritos"><i class="fa fa-heart"></i></a>
                         </td>
                     </tr>
                 </tbody>                                                                                       
