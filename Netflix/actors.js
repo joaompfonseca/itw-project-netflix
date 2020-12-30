@@ -94,7 +94,7 @@
                 .fail(function () {
                     console.log("SEARCH: FAIL!");
                 });
-;
+;           
         };
     };
 
@@ -104,6 +104,7 @@
 }
 
 $(document).ready(function () {
+    console.log("INFO: DOCUMENT READY!"); console.log("");
 
     //-----Autocomplete
     autocomplete = function (dataType, totalPages) {
@@ -125,14 +126,28 @@ $(document).ready(function () {
                 });
 
                 console.log("AUTO: DONE!"); console.log("");
-                console.log("INFO: DOCUMENT LOADED!");
+                console.log("INFO: DOCUMENT LOADED!"); console.log("");
             })
             .fail(function () {
                 console.log("AUTO: FAIL!")
             });
+
+        hideLoading();
     };
 
-    console.log("INFO: DOCUMENT READY!"); console.log("");
+    //-----PageLoading
+    //ShowLoading
+    function showLoading() {
+        $('#modal').modal('show');
+    };
+    //HideLoading
+    function hideLoading() {
+        $('#modal').on('shown.bs.modal', function (e) {
+            setTimeout(function () {
+                $("#modal").modal('hide');
+            }, 1000);
+        })
+    };
 
     //----------VALORES A ALTERAR QUANDO MUDAR O TIPO DE PÁGINA!!!----------//
     var dataType = 'Actors';   //Tipo de Dados
@@ -141,7 +156,7 @@ $(document).ready(function () {
     console.log("INFO: Tipo de dados: " + dataType);
     console.log("INFO: Modo de apresentação: " + dataText); console.log("");
     //---------------------------------------------------------------------//
+    showLoading();
     ko.applyBindings(new vm(dataType, dataText));
     autocomplete(dataType, totalPages);
-
 });
