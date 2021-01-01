@@ -137,4 +137,18 @@ $(document).ready(function () {
                 source: tips
             });
         });
+
+    //ShowLoading
+    function showLoading() {
+        $('#modal').modal('show');
+    };
+    //HideLoading
+    function hideLoading() {
+        $('#modal').on('shown.bs.modal', function (e) {
+            setTimeout(function () {
+                $("#modal").modal('hide');
+            }, 1000);
+        })
+    };
 });
+
