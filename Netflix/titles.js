@@ -3,7 +3,7 @@ $(document).ready(function () {
         //Vars
         var self = this;
         var load = false;
-
+       
         //Arrays
         pages = [];
         ids = [];
@@ -17,7 +17,9 @@ $(document).ready(function () {
         ];
 
         //Binds
+        self.baseUri = ko.observable('http://192.168.160.58/netflix/api/titles/');
         self.Type = ko.observable("Pesquisar títulos...");
+        self.id = ko.observable();
         self.Unlock = ko.observable(true);
         self.Query = ko.observable();
         self.Titles = ko.observable();
@@ -30,6 +32,7 @@ $(document).ready(function () {
         self.HasNext = ko.observable();
         self.FirstPage = ko.observable();
         self.LastPage = ko.observable();
+        self.releaseYear = ko.observable('');
 
         self.NextPage = function () {
             self.CurrentPage(self.CurrentPage() + 1);
@@ -53,22 +56,33 @@ $(document).ready(function () {
             self.UpdateList();
         };
 
+
         //Load Titles List
         $.ajax({
             url: "http://192.168.160.58/netflix/api/Titles?page=1&pagesize=10",
             success: function (data) {
-                self.Titles(data.Titles);
                 self.TotalTitles(data.TotalTitles);
                 self.TotalPages(data.TotalPages);
                 self.CurrentPage(data.CurrentPage);
                 self.PageSize(data.PageSize);
                 self.HasPrevious(data.HasPrevious);
                 self.HasNext(data.HasNext);
-
-
+                self.id(data.Id);
                 for (i = 1; i <= self.TotalPages(); i++) {
                     pages.push({ number: i.toString(), value: i });
                 };
+                self.titles = data.Titles;
+                for (a = 0; a < data.Titles.length; a++) {
+                    $.ajax({
+                        async:false,    
+                        url: "http://192.168.160.58/netflix/api/Titles/" + titles[a].Id,
+                        success: function (data) {
+                            self.titles[a].releaseYear = data.ReleaseYear ;
+                        }
+                    });
+                    console.log(self.titles[a]);
+                };
+                self.Titles(self.titles);
                 self.Pages(pages);
             }
         });
@@ -85,15 +99,27 @@ $(document).ready(function () {
                     url: uri,
                     success: function (data) {
                         self.Titles(data.Titles);
-                        self.ReleaseYear(data.ReleaseYear);
                         self.TotalPages(data.TotalPages);
                         self.HasPrevious(data.HasPrevious);
                         self.HasNext(data.HasNext);
 
                         for (i = 1; i <= self.TotalPages(); i++) {
                             pages.push({ number: i.toString(), value: i });
-                        }
+                        };
+                        self.titles = data.Titles;
+                        for (a = 0; a < data.Titles.length; a++) {
+                            $.ajax({
+                                async: false,
+                                url: "http://192.168.160.58/netflix/api/Titles/" + titles[a].Id,
+                                success: function (data) {
+                                    self.titles[a].releaseYear = data.ReleaseYear;
+                                }
+                            });
+                            console.log(self.titles[a]);
+                        };
+                        self.Titles(self.titles);
                         self.Pages(pages);
+
                     }
                 });
             };
