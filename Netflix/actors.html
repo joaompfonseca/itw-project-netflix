@@ -20,7 +20,7 @@
     <!--Navbar-->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="z-index: 1">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.html" title="Início">
                 <img class="custom-nav-img" src="../Custom/images/nav.png" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop">
@@ -28,14 +28,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="actors.html">Atores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="titles.html">Filmes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html" title="Início">Início</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="actors.html" title="Atores">Atores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="titles.html" title="Títulos">Títulos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
                 <form class="form-inline my-2">
-                    <input class="form-control w-auto" id="search" type="search" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase()}">
-                    <button class="btn btn-outline-success ml-1" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}"><i class="fa fa-search"></i></button>
+                    <input class="form-control w-auto" id="search" type="search" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase(), title : 'Pesquisar ' + DataText().toLowerCase()}">
+                    <button class="btn btn-outline-success ml-1" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}" title="Pesquisar"><i class="fa fa-search"></i></button>
                 </form>
             </div>
         </div>
@@ -43,25 +43,24 @@
     <!--Main-->
     <main>
         <div class="container">
+            <h3 data-bind="text: 'Lista de ' + DataText() + ' (' + TotalType() + ')'"></h3>
+            <hr />
             <div class="row">
-                <div class="col-12 col-sm-3">
-                    <h4 data-bind="text: 'Lista de ' + DataText() + ' (' + TotalType() + ')'"></h4>
-                </div>
-                <div class="col-12 col-sm-9 d-flex justify-content-end">
+                <div class="col-12 d-flex justify-content-end">
                     <div class="form-inline justify-content-end mb-2">
                         <div class="col-12 col-sm-auto form-inline justify-content-end">
                             <label class="mx-2 mb-2 col-form-label">Página</label>
-                            <button class="btn btn-outline-light mb-2" title="First Page" data-bind="enable: Unlock, visible: HasPrevious, event: {click: FirstPage}">1</button>
-                            <button class="btn btn-outline-light mb-2 ml-1" title="Next Page" data-bind="enable: Unlock, event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, visible: HasPrevious, event: {click: FirstPage}" title="Primeira página">1</button>
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, event: {click: PreviousPage}"><i class="fa fa-arrow-left" title="Página anterior"></i></button>
                             <select data-bind="enable: Unlock,
                                 options: Pages,
                                 selectedOptions: CurrentPage,
                                 optionsText: 'number',
                                 optionsValue: 'value',
                                 value: CurrentPage,
-                                event: {change: UpdateList}" class="mb-2 ml-1 bg-transparent text-white form-control"></select>
-                            <button class="btn btn-outline-light mb-2 ml-1" title="Previous Page" data-bind="enable: Unlock, event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
-                            <button class="btn btn-outline-light mb-2 ml-1" title="Last Page" data-bind="enable: Unlock, visible: HasNext, text: TotalPages, event:{click: LastPage}"></button>
+                                event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control"></select>
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, event: {click: NextPage}"><i class="fa fa-arrow-right" title="Página seguinte"></i></button>
+                            <button class="btn btn-outline-light mb-2" data-bind="enable: Unlock, visible: HasNext, text: TotalPages, event:{click: LastPage}" title="Última página"></button>
                         </div>
                         <div class="col-12 col-sm-auto form-inline justify-content-end">
                             <label class="mx-2 mb-2 col-form-label">Tamanho</label>
@@ -71,9 +70,9 @@
                                 optionsText: 'number',
                                 optionsValue: 'value',
                                 value: PageSize,
-                                event: {change: UpdateList}" class="mb-2 bg-transparent text-white form-control">
+                                event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control">
                             </select>
-                            <button class="btn btn-outline-primary mb-2 ml-1" data-bind="enable: !Unlock(), event: {click: Refresh}"><i class="fa fa-refresh"></i></button>
+                            <button class="btn btn-outline-primary mb-2 ml-1" data-bind="enable: !Unlock(), event: {click: Refresh}" title="Atualizar lista"><i class="fa fa-refresh"></i></button>
                         </div>
                     </div>
                 </div>
@@ -116,7 +115,7 @@
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered w-25">
             <div class="modal-content">
-                <div class="modal-header bg-dark border-dark text-light justify-content-center">
+                <div class="modal-header bg-dark text-light justify-content-center">
                     <h5 class="modal-title text-center"><i class="fa fa-spin fa-refresh"></i> Carregando a página...</h5>
                 </div>
             </div>
