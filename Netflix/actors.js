@@ -21,8 +21,8 @@
     self.TotalType = ko.observable();
     self.Pages = ko.observable();
     self.TotalPages = ko.observable();
-    self.CurrentPage = ko.observable();
-    self.PageSize = ko.observable();
+    self.CurrentPage = ko.observable('1');
+    self.PageSize = ko.observable('10');
     self.HasPrevious = ko.observable();
     self.HasNext = ko.observable();
     self.NextPage = function () {
@@ -50,14 +50,13 @@
     self.UpdateList = function () {
         var page = self.CurrentPage();
         var pageSize = self.PageSize();
-        if (page == undefined || pageSize == undefined) { page = '1'; pageSize = '10'; };
         var url = 'http://192.168.160.58/netflix/api/' + dataType + '?page=' + page + '&pagesize=' + pageSize;
 
         //Pedido AJAX
-        console.log("LIST: página " + page + ", tamanho " + pageSize + "...");
+        console.log("LIST: página: " + page + ", tamanho: " + pageSize + "...");
         $.getJSON(url)
             .done(function (data) {
-                self.TotalType(data['Total' + dataType])
+                self.TotalType(data['Total' + dataType]);
                 self.TotalPages(data.TotalPages);
                 self.HasPrevious(data.HasPrevious);
                 self.HasNext(data.HasNext);
