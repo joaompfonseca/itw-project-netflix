@@ -107,16 +107,18 @@
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Filme</th>
-                        <th scope="col">Data</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Ano</th>
+                        <th scope="col" class="w-50">Descrição</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: Type">
                     <tr>
-                        <td data-bind="text: Id"></td>
-                        <td data-bind="text: Name"></td>
-                        <td data-bind="text: releaseYear"></td>
+                        <td class="align-text-bottom" data-bind="text: Id"></td>
+                        <td class="align-text-bottom" data-bind="text: Name"></td>
+                        <td class="align-text-bottom" data-bind="text: ReleaseYear"></td>
+                        <td class="align-text-bottom" data-bind="text: Description"></td>
                         <td class="form-inline justify-content-end">
                             <a class="btn btn-outline-light" data-bind="attr: {href: 'titleDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-outline-light ml-0 ml-md-1 mt-1 mt-md-0" data-bind="attr: {href: 'titleFavorites.html?id=' + Id}" title="Adicionar aos favoritos"><i class="fa fa-heart"></i></a>
