@@ -10,6 +10,26 @@
         { number: "250", value: 250 },
         { number: "500", value: 500 }
     ];
+    sorting = [
+        { method: 'Por nome', value: 'Titles' },
+        { method: 'Mais recentes', value: 'LastTitles' },
+        { method: 'Por ano', value: 'TitlesByYear' },
+    ];
+    years = [
+        { year: '2008', value: 2008 },
+        { year: '2009', value: 2009 },
+        { year: '2010', value: 2010 },
+        { year: '2011', value: 2011 },
+        { year: '2012', value: 2012 },
+        { year: '2013', value: 2013 },
+        { year: '2014', value: 2014 },
+        { year: '2015', value: 2015 },
+        { year: '2016', value: 2016 },
+        { year: '2017', value: 2017 },
+        { year: '2018', value: 2018 },
+        { year: '2019', value: 2019 },
+        { year: '2020', value: 2020 }
+    ]
 
     //-----Binds
     //Basic
@@ -46,14 +66,33 @@
         self.UpdateList();
     };
 
+    //Custom
+    self.Sorting = ko.observable(dataType);
+    self.Year = ko.observable();
+    self.UnlockYear = ko.computed(function () {
+        if (self.Sorting() == 'TitlesByYear') {
+            return 'visible';
+        } else {
+            return 'hidden';
+        };
+    });
+
     //Update dataType Listing
     self.UpdateList = function () {
         var page = self.CurrentPage();
         var pageSize = self.PageSize();
-        var url = 'http://192.168.160.58/netflix/api/' + dataType + '?page=' + page + '&pagesize=' + pageSize;
+        var sorting = self.Sorting();
+        var year = self.Year();
+        if (sorting == 'TitlesByYear') {
+            var url = 'http://192.168.160.58/netflix/api/' + sorting + '?year=' + year + '&page=' + page + '&pagesize=' + pageSize;
+            var msg = "LIST: filtro: " + sorting + " (" + year + ") , página: " + page + ", tamanho: " + pageSize + "...";
+        } else {
+            var url = 'http://192.168.160.58/netflix/api/' + sorting + '?page=' + page + '&pagesize=' + pageSize;
+            var msg = "LIST: filtro: " + sorting + ", página: " + page + ", tamanho: " + pageSize + "...";
+        };
 
-        //Pedido AJAX
-        console.log("LIST: página: " + page + ", tamanho: " + pageSize + "...");
+        //Pedido AJAX;
+        console.log(msg);
         $.getJSON(url)
             .done(function (data) {
                 self.TotalType(data['Total' + dataType]);
@@ -93,7 +132,7 @@
                 .fail(function () {
                     console.log("SEARCH: FAIL!");
                 });
-;           
+            ;
         };
     };
 
@@ -104,6 +143,16 @@
 
 $(document).ready(function () {
     console.log("INFO: DOCUMENT READY!"); console.log("");
+
+    //titleBannerById -- do not touch or i bite you
+    //titleBannerById = function(id) {
+    //    var url = 'https://thingproxy.freeboard.io/fetch/https://www.netflix.com/pt/title/' + id; //https://cors-anywhere.herokuapp.com/
+    //    $.get(url, function (data) {
+    //        var posLink = data.search('nflxso.net/dnm/api/v6') + 22;
+    //        var imgLink = data.slice(posLink - 48, posLink + 134);
+    //        $('#img').attr('src', imgLink);
+    //    });
+    //};
 
     //-----Autocomplete
     autocomplete = function (dataType, totalPages) {
@@ -148,9 +197,9 @@ $(document).ready(function () {
     };
 
     //----------VALORES A ALTERAR QUANDO MUDAR O TIPO DE PÁGINA!!!----------//
-    var dataType = 'Actors';   //Tipo de Dados
-    var dataText = 'Atores';   //Texto Visível
-    var totalPages = '27391';  //Número de Elementos Autocomplete
+    var dataType = 'Titles';   //Tipo de Dados
+    var dataText = 'Títulos';   //Texto Visível
+    var totalPages = '6234';  //Número de Elementos Autocomplete
     console.log("INFO: Tipo de dados: " + dataType);
     console.log("INFO: Modo de apresentação: " + dataText); console.log("");
     //---------------------------------------------------------------------//

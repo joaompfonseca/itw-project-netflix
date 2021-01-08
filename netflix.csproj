@@ -125,6 +125,8 @@
     <Content Include="Netflix\index.html" />
     <Content Include="Custom\images\nav.png" />
     <Content Include="Netflix\index.js" />
+    <Content Include="Netflix\titleDetails.html" />
+    <Content Include="Netflix\titleDetails.js" />
     <Content Include="Netflix\titles.html" />
     <Content Include="Netflix\titles.js" />
     <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />

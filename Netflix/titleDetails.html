@@ -7,7 +7,7 @@
 
     <!--Separador-->
     <link href="../Custom/images/sep.ico" rel="icon" type="image/png" />
-    <title>Netflix - Atores</title>
+    <title>Netflix - Detalhes do Título</title>
 
     <!--Estilos-->
     <!--Bootstrap--><link rel="stylesheet" href="../Content/bootstrap.min.css" />
@@ -29,8 +29,8 @@
             <div class="collapse navbar-collapse" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html" title="Início">Início</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="actors.html" title="Atores">Atores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="titles.html" title="Títulos">Títulos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="actors.html" title="Atores">Atores</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="titles.html" title="Títulos">Títulos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
                 <form class="form-inline my-2">
@@ -44,45 +44,6 @@
     <main>
         <div class="container">
             <h3 data-bind="text: 'Lista de ' + DataText() + ' (' + TotalType() + ')'"></h3>
-            <hr />
-            <div class="row">
-                <div class="col-12 d-flex justify-content-end">
-                    <div class="form-inline justify-content-end mb-2">
-                        <div class="col-12 col-sm-auto form-inline justify-content-end">
-                            <label class="mx-2 mb-2 col-form-label">Página</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-outline-light mb-2" title="Primeira página" data-bind="enable: Unlock() && HasPrevious(), event: {click: FirstPage}">1</button>
-                                    <button class="btn btn-outline-light mb-2" title="Página anterior" data-bind="enable: Unlock() && HasPrevious(), event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
-                                </div>
-                                <select data-bind="enable: Unlock,
-                                options: Pages,
-                                selectedOptions: CurrentPage,
-                                optionsText: 'number',
-                                optionsValue: 'value',
-                                value: CurrentPage,
-                                event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control"></select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-light mb-2" title="Página seguinte" data-bind="enable: Unlock() && HasNext(), event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
-                                    <button class="btn btn-outline-light mb-2" title="Última página" data-bind="enable: Unlock() && HasNext(), text: TotalPages, event:{click: LastPage}"></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-auto form-inline justify-content-end">
-                            <label class="mx-2 mb-2 col-form-label">Tamanho</label>
-                            <select data-bind="enable: Unlock,
-                                options: pagesizes,
-                                selectedOptions: PageSize,
-                                optionsText: 'number',
-                                optionsValue: 'value',
-                                value: PageSize,
-                                event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control">
-                            </select>
-                            <button class="btn btn-outline-primary mb-2 ml-1" data-bind="enable: !Unlock(), event: {click: Refresh}"><i class="fa fa-refresh"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="container">
             <table class="table table-dark table-striped">
@@ -90,7 +51,8 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Nome</th>
-                        <th scope="col">Títulos</th>
+                        <th scope="col">Ano</th>
+                        <th scope="col" class="w-50">Descrição</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -98,10 +60,11 @@
                     <tr>
                         <td class="align-text-bottom" data-bind="text: Id"></td>
                         <td class="align-text-bottom" data-bind="text: Name"></td>
-                        <td class="align-text-bottom" data-bind="text: Titles"></td>
+                        <td class="align-text-bottom" data-bind="text: ReleaseYear"></td>
+                        <td class="align-text-bottom" data-bind="text: Description"></td>
                         <td class="form-inline justify-content-end">
-                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'actorDetails.html?id=' + Id}" title="Selecione para ver detalhes"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'actorFavorites.html?id=' + Id}" title="Selecione para adicionar aos favoritos"><i class="fa fa-heart"></i></a>
+                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'titleDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'titleFavorites.html?id=' + Id}" title="Adicionar aos favoritos"><i class="fa fa-heart"></i></a>
                         </td>
                     </tr>
                 </tbody>
@@ -133,6 +96,6 @@
     <script src="../Scripts/knockout-3.5.1.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
 
-    <script src="actors.js"></script>
+    <script src="titles.js"></script>
 </body>
 </html>
