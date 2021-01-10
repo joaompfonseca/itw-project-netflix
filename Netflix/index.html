@@ -18,7 +18,7 @@
 </head>
 <body>
     <!--Navbar-->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top navbar-color" style="z-index: 1">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
                 <img class="custom-nav-img" src="../Custom/images/nav.png" />
@@ -26,14 +26,14 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTop">
+            <div class="collapse navbar-collapse my-2" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active"><a class="nav-link" href="index.html">Início</a></li>
                     <li class="nav-item"><a class="nav-link" href="actors.html">Atores</a></li>
                     <li class="nav-item"><a class="nav-link" href="titles.html">Filmes</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
-                <form class="form-inline my-2">
+                <form class="form-inline">
                     <input class="form-control w-auto mr-2" id="search" type="search" data-bind="value: Query, attr: {placeholder: Type}, event: {change: UpdateSearch}">
                     <button class="btn btn-outline-success" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}"><i class="fa fa-search"></i></button>
                 </form>
@@ -142,7 +142,7 @@
         </div>
     </main>
     <!--Footer-->
-    <nav class="navbar navbar-dark bg-dark fixed-bottom">
+    <nav class="navbar navbar-dark fixed-bottom">
         <div class="container">
             <div class="navbar-text small">&copy;ITW2020 - Projeto de Introdução às Tecnologias Web</div>
             <div class="navbar-right navbar-text small d-none d-md-block">

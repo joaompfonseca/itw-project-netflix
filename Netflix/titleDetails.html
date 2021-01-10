@@ -18,7 +18,7 @@
 </head>
 <body>
     <!--Navbar-->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="z-index: 1">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html" title="Início">
                 <img class="custom-nav-img" src="../Custom/images/nav.png" />
@@ -26,22 +26,22 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTop">
+            <div class="collapse navbar-collapse my-2" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html" title="Início">Início</a></li>
                     <li class="nav-item"><a class="nav-link" href="actors.html" title="Atores">Atores</a></li>
                     <li class="nav-item active"><a class="nav-link" href="titles.html" title="Títulos">Títulos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
-                <form class="form-inline my-2">
-                    <input class="form-control w-auto" id="search" type="search" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase(), title : 'Pesquisar ' + DataText().toLowerCase()}">
-                    <button class="btn btn-outline-success ml-1" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}" title="Pesquisar"><i class="fa fa-search"></i></button>
-                </form>
             </div>
         </div>
     </nav>
     <!--Main-->
     <main>
+        <div class="jumbotron" id="banner">
+            <div class="banner-fade"></div>
+            <div class="container"></div>
+        </div>
         <div class="container">
             <h3 data-bind="text: 'Lista de ' + DataText() + ' (' + TotalType() + ')'"></h3>
         </div>
@@ -72,7 +72,7 @@
         </div>
     </main>
     <!--Footer-->
-    <nav class="navbar navbar-dark bg-dark fixed-bottom">
+    <nav class="navbar navbar-dark fixed-bottom">
         <div class="container">
             <div class="navbar-text small">&copy;ITW2020 - Projeto de Introdução às Tecnologias Web</div>
             <div class="navbar-right navbar-text small d-none d-md-block">
@@ -96,6 +96,6 @@
     <script src="../Scripts/knockout-3.5.1.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
 
-    <script src="titles.js"></script>
+    <script src="titleDetails.js"></script>
 </body>
 </html>

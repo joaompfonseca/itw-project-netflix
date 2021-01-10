@@ -18,7 +18,7 @@
 </head>
 <body>
     <!--Navbar-->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="z-index: 1">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html" title="Início">
                 <img class="custom-nav-img" src="../Custom/images/nav.png" />
@@ -26,14 +26,14 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarTop">
+            <div class="collapse navbar-collapse my-2" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html" title="Início">Início</a></li>
                     <li class="nav-item active"><a class="nav-link" href="actors.html" title="Atores">Atores</a></li>
                     <li class="nav-item"><a class="nav-link" href="titles.html" title="Títulos">Títulos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
-                <form class="form-inline my-2">
+                <form class="form-inline">
                     <input class="form-control w-auto" id="search" type="search" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase(), title : 'Pesquisar ' + DataText().toLowerCase()}">
                     <button class="btn btn-outline-success ml-1" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}" title="Pesquisar"><i class="fa fa-search"></i></button>
                 </form>
@@ -99,9 +99,11 @@
                         <td class="align-text-bottom" data-bind="text: Id"></td>
                         <td class="align-text-bottom" data-bind="text: Name"></td>
                         <td class="align-text-bottom" data-bind="text: Titles"></td>
-                        <td class="form-inline justify-content-end">
-                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'actorDetails.html?id=' + Id}" title="Selecione para ver detalhes"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'actorFavorites.html?id=' + Id}" title="Selecione para adicionar aos favoritos"><i class="fa fa-heart"></i></a>
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <a class="btn btn-outline-light" data-bind="attr: {href: 'actorDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-outline-light" data-bind="attr: {href: 'actorFavorites.html?id=' + Id}" title="Adicionar aos favoritos"><i class="fa fa-heart"></i></a>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -109,7 +111,7 @@
         </div>
     </main>
     <!--Footer-->
-    <nav class="navbar navbar-dark bg-dark fixed-bottom">
+    <nav class="navbar navbar-dark fixed-bottom">
         <div class="container">
             <div class="navbar-text small">&copy;ITW2020 - Projeto de Introdução às Tecnologias Web</div>
             <div class="navbar-right navbar-text small d-none d-md-block">
