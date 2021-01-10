@@ -16,6 +16,13 @@ hr {
 .navbar {
     z-index: 1;
 }
+
+.vertical-center {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
 /*Background Color*/
 body, .navbar, tbody, tr, option {
     background-color: #000000
@@ -35,11 +42,10 @@ input[type="search"]:focus {
 }
 
 #banner {
-    margin: -30px -1px 0 -1px;
+    margin: -100px 0 0 0;
     padding: 0px;
-    height: 100vh;
     background: transparent;
-    background-position: center top;
+    background-position: right top;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -48,7 +54,7 @@ input[type="search"]:focus {
     height: inherit;
     width: 100%;
     z-index: 1;
-    background: rgba(0, 0, 0, 0) linear-gradient(to left, rgba(255, 255, 255, 0) 0, rgba(0, 0, 0, 1) 100%) repeat scroll 0 0;
+    background: linear-gradient(270deg, rgba(0,0,0,0) 0, rgba(0,0,0,1) 90%), linear-gradient(180deg, rgba(0,0,0,0) 80%, rgba(0,0,0,1) 100%);
 }
 
 ::-webkit-scrollbar {
