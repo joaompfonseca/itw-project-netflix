@@ -1,111 +1,49 @@
 ﻿var vm = function (dataType, dataText, id) {
     var self = this;
 
-    //-----Arrays
-
     //-----Binds
     //Basic
     self.DataType = ko.observable(dataType);
     self.DataText = ko.observable(dataText);
-    self.Unlock = ko.observable(true);
-    self.Query = ko.observable('');
+
+    self.Id = ko.observable(id);
+    self.Name = ko.observable();
+    self.DateAdded = ko.observable();
+    self.Description = ko.observable();
+    self.Duration = ko.observable();
+    self.ReleaseYear = ko.observable();
+    self.Rating = ko.observable();
     self.Type = ko.observable();
-    self.TotalType = ko.observable();
-    self.Pages = ko.observable();
-    self.TotalPages = ko.observable();
-    self.CurrentPage = ko.observable('1');
-    self.PageSize = ko.observable('10');
-    self.HasPrevious = ko.observable();
-    self.HasNext = ko.observable();
-    self.NextPage = function () {
-        self.CurrentPage(self.CurrentPage() + 1);
-        self.UpdateList();
-    };
-    self.PreviousPage = function () {
-        self.CurrentPage(self.CurrentPage() - 1);
-        self.UpdateList();
-    };
-    self.FirstPage = function () {
-        self.CurrentPage(1);
-        self.UpdateList();
-    };
-    self.LastPage = function () {
-        self.CurrentPage(self.TotalPages());
-        self.UpdateList();
-    };
-    self.Refresh = function () {
-        self.Unlock(true);
-        self.UpdateList();
-    };
-
-    //Custom
-    self.Sorting = ko.observable(dataType);
-    self.Year = ko.observable();
-    self.UnlockYear = ko.computed(function () {
-        if (self.Sorting() == 'TitlesByYear') {
-            return 'visible';
-        } else {
-            return 'hidden';
-        };
-    });
-
+    self.Actors = ko.observable();
+    self.Countries = ko.observable();
+    self.Directors = ko.observable();
+    self.Categories = ko.observable();
     //Update dataType Listing
     self.UpdateList = function () {
-        var page = self.CurrentPage();
-        var pageSize = self.PageSize();
-        var sorting = self.Sorting();
-        var year = self.Year();
-        if (sorting == 'TitlesByYear') {
-            var url = 'http://192.168.160.58/netflix/api/' + sorting + '?year=' + year + '&page=' + page + '&pagesize=' + pageSize;
-            var msg = "LIST: filtro: " + sorting + " (" + year + ") , página: " + page + ", tamanho: " + pageSize + "...";
-        } else {
-            var url = 'http://192.168.160.58/netflix/api/' + sorting + '?page=' + page + '&pagesize=' + pageSize;
-            var msg = "LIST: filtro: " + sorting + ", página: " + page + ", tamanho: " + pageSize + "...";
-        };
+        var url = 'http://192.168.160.58/netflix/api/' + dataType + '/' + id;
 
         //Pedido AJAX;
-        console.log(msg);
+        console.log("LIST: Id: "+ id);
         $.getJSON(url)
             .done(function (data) {
-                self.TotalType(data['Total' + dataType]);
-                self.TotalPages(data.TotalPages);
-                self.HasPrevious(data.HasPrevious);
-                self.HasNext(data.HasNext);
-                self.Type(data[dataType]);
-
-                var pages = [];
-                for (i = 1; i <= self.TotalPages(); i++) {
-                    pages.push({ number: i.toString(), value: i });
-                };
-                self.Pages(pages);
+                console.log(data)
+                self.Name(data.Name);
+                self.DateAdded(data.DateAdded);
+                self.Description(data.Description);
+                self.Duration(data.Duration);
+                self.ReleaseYear(data.ReleaseYear);
+                self.Rating(data.Rating); // Id, Code, Title
+                self.Type(data.Type); //Id, Name, Titles
+                self.Actors(data.Actors); //For each - Id, Name, Titles
+                self.Countries(data.Countries); //For each - Id, Name, Titles
+                self.Directors(data.Directors); //For each - Id, Name, Titles
+                self.Categories(data.Categories); //For each - Id, Name, Titles
 
                 console.log("LIST: DONE!");
             })
             .fail(function () {
                 console.log("LIST: FAIL!");
             });
-    };
-
-    //Update dataType Search
-    self.UpdateSearch = function () {
-        if (self.Query().length > 2) {
-            self.Unlock(false);
-            var q = self.Query();
-            var url = 'http://192.168.160.58/netflix/api/Search/' + dataType + '?name=' + q;
-
-            //Pedido AJAX
-            console.log("SEARCH: termo '" + q + "'...");
-            $.getJSON(url)
-                .done(function (data) {
-                    self.Type(data);
-
-                    console.log("SEARCH: DONE!");
-                })
-                .fail(function () {
-                    console.log("SEARCH: FAIL!");
-                });
-            ;
-        };
     };
 
     //-----Load Inicial
@@ -119,11 +57,20 @@ $(document).ready(function () {
     //-----titleBannerById
     function bannerById(id) {
         var url = 'https://thingproxy.freeboard.io/fetch/https://www.netflix.com/pt/title/' + id; //https://cors-anywhere.herokuapp.com/
-        $.get(url, function (data) {
-            var posLink = data.search('nflxso.net/dnm/api/v6') + 22;
-            var imgLink = data.slice(posLink - 48, posLink + 134);
-            $('#banner').css('background-image', 'url('+imgLink+')');
-        });
+
+        //Pedido AJAX
+        console.log("BANNER: Id: " + id)
+        $.get(url)
+            .done(function (data) {
+                var posLink = data.search('nflxso.net/dnm/api/v6') + 22;
+                var imgLink = data.slice(posLink - 48, posLink + 134);
+                $('#banner').css('background-image', 'url(' + imgLink + ')');
+                console.log("BANNER: DONE!")
+            })
+            .fail(function () {
+                $('#banner').css('background-image', 'url(../Custom/images/banner.png)');
+                console.log("BANNER: FAIL!")
+            });
     };
 
     //-----PageLoading
@@ -160,12 +107,12 @@ $(document).ready(function () {
     var dataType = 'Titles';   //Tipo de Dados
     var dataText = 'Título';   //Texto Visível
     console.log("INFO: Tipo de dados: " + dataType);
-    console.log("INFO: Modo de apresentação: " + dataText); console.log("");
+    console.log("INFO: Modo de apresentação: " + dataText);
     //---------------------------------------------------------------------//
     showLoading();
     $(document).ajaxComplete(hideLoading);
     var id = getUrlParameter('id');
-    console.log("INFO: Id: " + id);
+    console.log("INFO: Id: " + id); console.log("");
     bannerById(id);
     ko.applyBindings(new vm(dataType, dataText, id));
     //--------------------------------

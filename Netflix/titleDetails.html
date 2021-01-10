@@ -39,11 +39,34 @@
     <!--Main-->
     <main>
         <div class="jumbotron" id="banner">
-            <div class="banner-fade"></div>
-            <div class="container"></div>
+            <div class="banner-fade">
+                <div class="container vertical-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <h3><strong data-bind="text: Name"></strong></h3>
+                            <i class="fa fa-calendar"></i> <p1 data-bind="text: ReleaseYear() + ' |'"></p1>
+                            <p1 data-bind="foreach: Rating">
+                                <i class="fa fa-star-o"></i> <span data-bind="text: Code + ' |'"></span>
+                            </p1>
+                            <i class="fa fa-clock-o"></i> <p1 data-bind="text: Duration() + ' |'"></p1>
+                            <i class="fa fa-bookmark-o"></i> <p1 data-bind="foreach: Categories">
+                                <!-- ko if: $index() != 0 -->,<!-- /ko -->
+                                <span data-bind="text: Name"></span>
+                            </p1><br /><br />
+                        </div>
+                        <div class="col-6">
+                            <p1 data-bind="text: Description"></p1><br /><br />
+                            <p1 data-bind="foreach: Type">
+                                <strong>Tipo: </strong><span data-bind="text: Name"></span>
+                            </p1><br />
+                            <p1><strong>Adicionado em: </strong><span data-bind="text: DateAdded"></span></p1>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="container">
-            <h3 data-bind="text: 'Lista de ' + DataText() + ' (' + TotalType() + ')'"></h3>
+            <h3 data-bind="text: 'Lista de ' + DataText() + ' (' + Id() + ')'"></h3>
         </div>
         <div class="container">
             <table class="table table-dark table-striped">
@@ -56,12 +79,12 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody data-bind="foreach: Type">
+                <tbody data-bind="">
                     <tr>
-                        <td class="align-text-bottom" data-bind="text: Id"></td>
-                        <td class="align-text-bottom" data-bind="text: Name"></td>
-                        <td class="align-text-bottom" data-bind="text: ReleaseYear"></td>
-                        <td class="align-text-bottom" data-bind="text: Description"></td>
+                        <td class="align-text-bottom" data-bind=""></td>
+                        <td class="align-text-bottom" data-bind=""></td>
+                        <td class="align-text-bottom" data-bind=""></td>
+                        <td class="align-text-bottom" data-bind=""></td>
                         <td class="form-inline justify-content-end">
                             <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'titleDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                             <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'titleFavorites.html?id=' + Id}" title="Adicionar aos favoritos"><i class="fa fa-heart"></i></a>
