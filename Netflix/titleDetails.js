@@ -56,7 +56,7 @@ $(document).ready(function () {
 
     //-----titleBannerById
     function bannerById(id) {
-        var url = 'https://thingproxy.freeboard.io/fetch/https://www.netflix.com/pt/title/' + id; //https://cors-anywhere.herokuapp.com/
+        var url = 'https://cors-anywhere.herokuapp.com/https://www.netflix.com/pt/title/' + id; //https://thingproxy.freeboard.io/fetch/
 
         //Pedido AJAX
         console.log("BANNER: Id: " + id)
