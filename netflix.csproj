@@ -145,6 +145,12 @@
     <Content Include="Custom\images\sep.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="index.html" />
+    <Content Include="Netflix\directors.html" />
+    <Content Include="Netflix\directors.js" />
+    <Content Include="Netflix\countries.html" />
+    <Content Include="Netflix\countries.js" />
+    <Content Include="Netflix\categories.html" />
+    <Content Include="Netflix\categories.js" />
     <Content Include="Netflix\actors.html" />
     <Content Include="Netflix\actors.js" />
     <Content Include="Netflix\index.html" />

@@ -26,7 +26,6 @@
         console.log("LIST: Id: "+ id);
         $.getJSON(url)
             .done(function (data) {
-                console.log(data)
                 self.Name(data.Name);
                 self.DateAdded(data.DateAdded);
                 self.Description(data.Description);
@@ -56,7 +55,7 @@ $(document).ready(function () {
 
     //-----titleBannerById
     function bannerById(id) {
-        var url = 'https://cors-anywhere.herokuapp.com/https://www.netflix.com/pt/title/' + id; //https://thingproxy.freeboard.io/fetch/
+        var url = 'https://thingproxy.freeboard.io/fetch/http://www.netflix.com/pt/title/' + id; //https://cors-anywhere.herokuapp.com/ // https://thingproxy.freeboard.io/fetch/
 
         //Pedido AJAX
         console.log("BANNER: Id: " + id)
