@@ -11,9 +11,10 @@
         { number: "500", value: 500 }
     ];
     sorting = [
-        { method: 'Por nome', value: 'Titles' },
+        { method: 'Por nome', value: dataType },
         { method: 'Mais recentes', value: 'LastTitles' },
         { method: 'Por ano', value: 'TitlesByYear' },
+        { method: 'Favoritos', value: 'Favourites' }
     ];
     years = [
         {year: '2008', value: 2008},
@@ -66,18 +67,42 @@
         self.UpdateList();
     };
 
-    //Custom
-    self.Iframe = ko.observable('lol');
     self.Sorting = ko.observable(dataType);
     self.Year = ko.observable();
     self.UnlockYear = ko.computed(function () {
         if (self.Sorting() == 'TitlesByYear') {
-            return 'visible';
+            return true;
         } else {
-            return 'hidden';
+            return false;
         };
     });
-    
+
+    self.Favourite = function () {
+        var type = this;
+        var id = dataType + '_' + this.Id;
+        if (id in amplify.store()) {
+            amplify.store(id, null);
+            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+        } else {
+            amplify.store(id, type);
+            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+        }
+    };
+    self.HideControls = ko.computed(function () {
+        if ((self.Sorting() == 'Favourites') || !self.Unlock()) {
+            return 'hidden';
+        } else {
+            return 'visible';
+        };
+    });
+    self.HideFilters = ko.computed(function () {
+        if (!self.Unlock()) {
+            return 'hidden';
+        } else {
+            return 'visible';
+        };
+    });
+
 
     //Update dataType Listing
     self.UpdateList = function () {
@@ -88,6 +113,27 @@
         if (sorting == 'TitlesByYear') {
             var url = 'http://192.168.160.58/netflix/api/' + sorting + '?year=' + year + '&page=' + page + '&pagesize=' + pageSize;
             var msg = "LIST: filtro: " + sorting + " (" + year + ") , página: " + page + ", tamanho: " + pageSize + "...";
+        } else if (sorting == 'Favourites') {
+            //-----Listar favoritos
+            var favArray = amplify.store(); //Buscar favoritos
+            var favVals = [];               
+
+            //Adicionar o dicionário com os valores {"Id": ..., "Name": ...} de cada favorito a uma lista nova
+            for (var key in favArray) {
+                if (key.includes(dataType)) {
+                    favVals.push(favArray[key]);
+                }
+            };
+            self.Type(favVals); //Listar os favoritos
+            self.TotalType(favVals.length);
+
+            //Definir a cor dos botões
+            for (i = 0; i < favVals.length; i++) {
+                var id = dataType +'_' + favVals[i].Id;
+                $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+            };
+            
+            return;
         } else {
             var url = 'http://192.168.160.58/netflix/api/' + sorting + '?page=' + page + '&pagesize=' + pageSize;
             var msg = "LIST: filtro: " + sorting + ", página: " + page + ", tamanho: " + pageSize + "...";
@@ -109,6 +155,17 @@
                 };
                 self.Pages(pages);
 
+                //Favoritos
+                var lst = data[dataType]
+                for (i = 0; i < lst.length; i++) {
+                    var id = dataType +'_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
                 console.log("LIST: DONE!");
             })
             .fail(function () {
@@ -128,6 +185,17 @@
             $.getJSON(url)
                 .done(function (data) {
                     self.Type(data);
+
+                    //Favoritos
+                    var lst = data
+                    for (i = 0; i < lst.length; i++) {
+                        var id = dataType +'_' + lst[i].Id;
+                        if (id in amplify.store()) {
+                            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        } else {
+                            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        };
+                    };
 
                     console.log("SEARCH: DONE!");
                 })

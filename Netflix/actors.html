@@ -28,14 +28,33 @@
             </button>
             <div class="collapse navbar-collapse my-2" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html" title="Início">Início</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="actors.html" title="Atores">Atores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="titles.html" title="Títulos">Títulos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="titles.html" title="Títulos"><i class="fa fa-film"></i> Títulos</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="actors.html" title="Atores"><i class="fa fa-users"></i> Atores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directors.html" title="Diretores"><i class="fa fa-users"></i> Diretores</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bars"></i> Outros
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="categories.html" title="Categorias"><i class="fa fa-bookmark"></i> Categorias</a>
+                            <a class="dropdown-item" href="ratings.html" title="Classificações"><i class="fa fa-star"></i> Classificações</a>
+                            <a class="dropdown-item" href="countries.html" title="Países"><i class="fa fa-flag"></i> Países</a>
+                            <a class="dropdown-item" href="stats.html" title="Estatísticas"><i class="fa fa-bar-chart"></i> Estatísticas</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="favourites.html" title="Favoritos"><i class="fa fa-heart"></i> Favoritos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
                 <form class="form-inline">
-                    <input class="form-control w-auto" id="search" type="search" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase(), title : 'Pesquisar ' + DataText().toLowerCase()}">
-                    <button class="btn btn-outline-success ml-1" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}" title="Pesquisar"><i class="fa fa-search"></i></button>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary border-right-0" data-bind="enable: !Unlock(), event: {click: Refresh}"><i class="fa fa-refresh"></i></button>
+                        </div>
+                        <input class="form-control w-auto" id="search" type="search" autocomplete="off" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase(), title : 'Pesquisar ' + DataText().toLowerCase()}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success border-left-0" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}" title="Pesquisar"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -48,7 +67,17 @@
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
                     <div class="form-inline justify-content-end mb-2">
-                        <div class="col-12 col-sm-auto form-inline justify-content-end">
+                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideFilters}"
+                            <label class="mx-2 mb-2 col-form-label">Filtro</label>
+                            <select data-bind="enable: Unlock,
+                                    options: sorting,
+                                    optionsText: 'method',
+                                    optionsValue: 'value',
+                                    value: Sorting,
+                                    event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control">
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideControls}">
                             <label class="mx-2 mb-2 col-form-label">Página</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -68,7 +97,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-auto form-inline justify-content-end">
+                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideControls}">
                             <label class="mx-2 mb-2 col-form-label">Tamanho</label>
                             <select data-bind="enable: Unlock,
                                 options: pagesizes,
@@ -78,7 +107,6 @@
                                 value: PageSize,
                                 event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control">
                             </select>
-                            <button class="btn btn-outline-primary mb-2 ml-1" data-bind="enable: !Unlock(), event: {click: Refresh}"><i class="fa fa-refresh"></i></button>
                         </div>
                     </div>
                 </div>
@@ -101,8 +129,8 @@
                         <td class="align-text-bottom" data-bind="text: Titles"></td>
                         <td class="text-right">
                             <div class="btn-group">
-                                <a class="btn btn-outline-light" data-bind="attr: {href: 'actorDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-outline-light" data-bind="attr: {href: 'actorFavorites.html?id=' + Id}" title="Adicionar aos favoritos"><i class="fa fa-heart"></i></a>
+                                <a class="btn btn-outline-light" data-bind="attr:  {href: $parent.DataType().toLowerCase() + 'Details.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-outline-light" data-bind="attr: {id: $parent.DataType() +'_' + Id}, event: {click: $parent.Favourite}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
                             </div>
                         </td>
                     </tr>
@@ -134,6 +162,7 @@
     <script src="../Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="../Scripts/knockout-3.5.1.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/amplify.min.js"></script>
 
     <script src="actors.js"></script>
 </body>

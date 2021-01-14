@@ -44,6 +44,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK.Amplify, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>packages\AWSSDK.Amplify.3.5.3.23\lib\net45\AWSSDK.Amplify.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=885c28607f98e604, processorArchitecture=MSIL">
+      <HintPath>packages\AWSSDK.Core.3.5.1.59\lib\net45\AWSSDK.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -156,8 +162,8 @@
     <Content Include="Netflix\index.html" />
     <Content Include="Custom\images\nav.png" />
     <Content Include="Netflix\index.js" />
-    <Content Include="Netflix\titleDetails.html" />
-    <Content Include="Netflix\titleDetails.js" />
+    <Content Include="Netflix\titlesDetails.html" />
+    <Content Include="Netflix\titlesDetails.js" />
     <Content Include="Netflix\titles.html" />
     <Content Include="Netflix\titles.js" />
     <Content Include="obj\Debug\netflix.csproj.FileListAbsolute.txt" />
@@ -222,6 +228,15 @@
     <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\System.Xml.XPath.XDocument.dll" />
     <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\vbc.exe" />
     <Content Include="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest\VBCSCompiler.exe" />
+    <None Include="Scripts\amplify-vsdoc.js" />
+    <Content Include="Scripts\amplify.js" />
+    <Content Include="Scripts\amplify.min.js" />
+    <Content Include="Scripts\amplify\amplify.core.js" />
+    <Content Include="Scripts\amplify\amplify.core.min.js" />
+    <Content Include="Scripts\amplify\amplify.request.js" />
+    <Content Include="Scripts\amplify\amplify.request.min.js" />
+    <Content Include="Scripts\amplify\amplify.store.js" />
+    <Content Include="Scripts\amplify\amplify.store.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -230,6 +245,7 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\GPL-LICENSE.txt" />
     <Content Include="Scripts\index.js.flow" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
@@ -279,10 +295,12 @@
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\knockout-3.5.1.debug.js" />
     <Content Include="Scripts\knockout-3.5.1.js" />
+    <Content Include="Scripts\MIT-LICENSE.txt" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\README.txt" />
     <Content Include="Scripts\src\index.js" />
     <Content Include="Scripts\src\methods\defaults.js" />
     <Content Include="Scripts\src\methods\destroy.js" />
@@ -423,6 +441,9 @@
   <ItemGroup>
     <Folder Include=".vs\netflix\v16\" />
     <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="packages\AWSSDK.Amplify.3.5.3.23\analyzers\dotnet\cs\AWSSDK.Amplify.CodeAnalysis.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
