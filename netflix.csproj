@@ -148,6 +148,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Custom\images\banner.png" />
+    <Content Include="Custom\images\missingPerson.jpg" />
     <Content Include="Custom\images\sep.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="index.html" />

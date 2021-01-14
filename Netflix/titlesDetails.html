@@ -28,9 +28,21 @@
             </button>
             <div class="collapse navbar-collapse my-2" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html" title="Início">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="actors.html" title="Atores">Atores</a></li>
-                    <li class="nav-item active"><a class="nav-link" href="titles.html" title="Títulos">Títulos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="titles.html" title="Títulos"><i class="fa fa-film"></i> Títulos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="actors.html" title="Atores"><i class="fa fa-users"></i> Atores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directors.html" title="Diretores"><i class="fa fa-users"></i> Diretores</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bars"></i> Outros
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="categories.html" title="Categorias"><i class="fa fa-bookmark"></i> Categorias</a>
+                            <a class="dropdown-item" href="ratings.html" title="Classificações"><i class="fa fa-star"></i> Classificações</a>
+                            <a class="dropdown-item" href="countries.html" title="Países"><i class="fa fa-flag"></i> Países</a>
+                            <a class="dropdown-item" href="stats.html" title="Estatísticas"><i class="fa fa-bar-chart"></i> Estatísticas</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="favourites.html" title="Favoritos"><i class="fa fa-heart"></i> Favoritos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
             </div>
@@ -65,33 +77,28 @@
                 </div>
             </div>
         </div>
+        <!--Atores-->
         <div class="container">
-            <h3 data-bind="text: 'Lista de ' + DataText() + ' (' + Id() + ')'"></h3>
+            <h3>Atores</h3>
+            <hr />
         </div>
         <div class="container">
-            <table class="table table-dark table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Ano</th>
-                        <th scope="col" class="w-50">Descrição</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody data-bind="">
-                    <tr>
-                        <td class="align-text-bottom" data-bind=""></td>
-                        <td class="align-text-bottom" data-bind=""></td>
-                        <td class="align-text-bottom" data-bind=""></td>
-                        <td class="align-text-bottom" data-bind=""></td>
-                        <td class="form-inline justify-content-end">
-                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'titleDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                            <a class="btn btn-outline-light ml-1 mt-1" data-bind="attr: {href: 'titleFavorites.html?id=' + Id}" title="Adicionar aos favoritos"><i class="fa fa-heart"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="row justify-content-start" data-bind="foreach: Actors">
+                <div class="col-auto p-0">
+                    <div class="col-12 p-0">
+                        <img class="image" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
+                        <div class="middle">
+                            <div class="btn-group">
+                                <a class="btn btn-outline-light actorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Actors_' + Id}, event: {click: $parent.FavouriteActors}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0 imgCaption">
+                        <p class="text-center" data-bind="text: Name"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <!--Footer-->
@@ -103,11 +110,48 @@
             </div>
         </div>
     </nav>
+    <!--actorsDetailsModal-->
+    <div class="modal fade hide" id="actorsDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="actorsDetailsId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <img  class="img-fluid" id="actorsDetailsImg"/>
+                            </div>
+                            <div class="col-8">
+                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: ActorsDetailsTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-7">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--Modal-->
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered w-25">
             <div class="modal-content">
-                <div class="modal-header bg-dark text-light justify-content-center">
+                <div class="modal-header text-light justify-content-center">
                     <h5 class="modal-title text-center"><i class="fa fa-spin fa-refresh"></i> Carregando a página...</h5>
                 </div>
             </div>
@@ -118,6 +162,7 @@
     <script src="../Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="../Scripts/knockout-3.5.1.js"></script>
     <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/amplify.min.js"></script>
 
     <script src="titlesDetails.js"></script>
 </body>
