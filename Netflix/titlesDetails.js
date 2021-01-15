@@ -21,10 +21,26 @@
     self.ActorsImg = ko.observableArray();
     self.ActorsDetailsTitles = ko.observable();
 
+    self.DirectorsImg = ko.observableArray();
+    self.DirectorsDetailsTitles = ko.observable();
+
     //Favoritos - Atores
     self.FavouriteActors = function () {
         var type = this;
         var id = 'Actors_' + this.Id;
+        if (id in amplify.store()) {
+            amplify.store(id, null);
+            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+        } else {
+            amplify.store(id, type);
+            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+        }
+    };
+
+    //Favoritos - Diretores
+    self.FavouriteDirectors = function () {
+        var type = this;
+        var id = 'Directors_' + this.Id;
         if (id in amplify.store()) {
             amplify.store(id, null);
             $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
@@ -68,8 +84,45 @@
                 self.Directors(data.Directors); //For each - Id, Name, Titles
                 self.Categories(data.Categories); //For each - Id, Name, Titles
 
+                //-----Youtube Trailer
+                function getTrailer() {
+                    if (self.Name().includes('?')) {
+                        return;
+                    }
+                    var nameLst = self.Name().split(" ");
+                    var nameQ = "";
+                    for (i = 0; i < nameLst.length; i++) {
+                        nameQ += encodeURIComponent(nameLst[i]) + "+";
+                    };
+                    nameQ += 'Netflix+Trailer';
+                    nameQ.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/['"]+/g, '%27');
+                    console.log(nameQ)
+
+                    //Pedido AJAX
+                    $.get('https://thingproxy.freeboard.io/fetch/https://www.youtube.com/results?search_query=' + nameQ)
+                        .done(function (data) {
+                            var posLink = data.search('"/watch') + 10;
+                            var vidLink = data.slice(posLink, posLink + 11);
+                            $('#trailer').attr('src', 'https://www.youtube.com/embed/' + vidLink + '?rel=0&modestbranding=1');
+                            console.log('https://www.youtube.com/embed/' + vidLink + '?rel=0&modestbranding=1')
+                            console.log("TRAILER: DONE!")
+                        }).fail(function () {
+                            console.log("TRAILER: FAIL!")
+                        });
+
+                    $('#btnTrailer').removeClass('d-none');
+                    $('#btnTrailer').addClass('d-block');
+
+                    $('#trailerDiv').removeClass('d-none');
+                };
+                getTrailer();
+
+                //-----Atores
                 //Favoritos - Atores
                 var lst = data.Actors;
+                if (lst.length > 0) {
+                    $('#actorsDiv').removeClass('d-none');
+                }
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Actors_' + lst[i].Id;
                     if (id in amplify.store()) {
@@ -82,7 +135,6 @@
                 //Imagens dos Atores
                 var actors = self.Actors();
                 var actorsQ = [];
-
                 for (actor in actors) {
                     var name = actors[actor].Name;
                     var newName = name.split(" ");
@@ -104,31 +156,88 @@
                         $.get(url + name)
                             .done(function (data) {
                                 var posLink = data.search('acsta.net/c_162_216/');
+                                var endLink = data.indexOf('" ', posLink);
                                 if (posLink != -1) {
-                                    var imgLink = data.slice(posLink - 19, posLink + 55).replace(/['"]+/g, '');
-                                    if ((!imgLink.includes("jpg")) && (!imgLink.includes("png"))) {
-                                        imgLink += "jpg";
-                                    }
+                                    var imgLink = data.slice(posLink - 19, endLink).replace(/['"]+/g, '');
                                     if (!imgLink.includes("empty")) {
                                         $('#' + id).attr('src', imgLink);
-                                        actorsImg.push({ Id: id, Img: imgLink })
-                                        console.log("ACT_IMG: DONE!")
-                                    }
-                                }
+                                        actorsImg.push({ Id: id, Img: imgLink });
+                                        console.log("ACT_IMG: DONE!");
+                                    };
+                                };
                             })
                             .fail(function () {
-                                console.log("ACT_IMG: FAIL!")
+                                console.log("ACT_IMG: FAIL!");
                             });
                         i++
                         if (i < actorsQ.length) {
                             addActorImg();
                         }
                     }
-
-                    self.ActorsImg(actorsImg);
                     addActorImg();
+                    self.ActorsImg(actorsImg);
                 }
-                //-----
+
+                //-----Diretores
+                //Favoritos - Diretores
+                var lst = data.Directors;
+                if (lst.length > 0) {
+                    $('#directorsDiv').removeClass('d-none');
+                }
+                for (i = 0; i < lst.length; i++) {
+                    var id = 'Directors_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
+                //Imagens dos Diretores
+                var directors = self.Directors();
+                var directorsQ = [];
+                for (director in directors) {
+                    var name = directors[director].Name;
+                    var newName = name.split(" ");
+                    name = "";
+                    for (i = 0; i < newName.length - 1; i++) {
+                        name += newName[i] + "+";
+                    };
+                    name += newName[i];
+                    directorsQ.push(name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/['"]+/g, '%27'));
+                };
+                if (directorsQ.length > 0) {
+                    var i = 0;
+                    var directorsImg = [];
+                    function addDirectorImg() {
+                        var url = 'https://thingproxy.freeboard.io/fetch/http://www.adorocinema.com/busca/?q=';
+                        var name = directorsQ[i];
+                        var id = directors[i].Id;
+                        //Pedido AJAX
+                        $.get(url + name)
+                            .done(function (data) {
+                                var posLink = data.search('acsta.net/c_162_216/');
+                                var endLink = data.indexOf('" ', posLink);
+                                if (posLink != -1) {
+                                    var imgLink = data.slice(posLink - 19, endLink).replace(/['"]+/g, '');
+                                    if (!imgLink.includes("empty")) {
+                                        $('#' + id).attr('src', imgLink);
+                                        directorsImg.push({ Id: id, Img: imgLink });
+                                        console.log("DIR_IMG: DONE!");
+                                    };
+                                };
+                            })
+                            .fail(function () {
+                                console.log("DIR_IMG: FAIL!");
+                            });
+                        i++;
+                        if (i < directorsQ.length) {
+                            addDirectorImg();
+                        };
+                    }
+                    addDirectorImg();
+                    self.DirectorsImg(directorsImg);
+                }
 
                 console.log("LIST: DONE!");
             })
@@ -142,7 +251,7 @@
         var id = $(this).attr('id');
         var actorsImg = self.ActorsImg();
         var imgLink = "../Custom/images/missingPerson.jpg";
-
+        
         for (i in actorsImg) {
             if (actorsImg[i].Id.toString() == id) {
                 imgLink = actorsImg[i].Img;
@@ -179,6 +288,48 @@
         $('#actorsDetailsModal').modal('show');
     });
 
+    //-----directorsDetailsModal
+    $(document).on("click", ".directorsDetails", function () {
+        var id = $(this).attr('id');
+        var directorsImg = self.DirectorsImg();
+        var imgLink = "../Custom/images/missingPerson.jpg";
+  
+        for (i in directorsImg) {
+            if (directorsImg[i].Id.toString() == id) {
+                imgLink = directorsImg[i].Img;
+            };
+        };
+
+        var url = 'http://192.168.160.58/netflix/api/Directors/' + id;
+
+        //Pedido AJAX;
+        console.log("LIST: Id: " + id);
+        $.getJSON(url)
+            .done(function (data) {
+                self.DirectorsDetailsTitles(data.Titles);
+
+                $('#directorsDetailsId').text('(' + data.Id + ') ' + data.Name);
+                //Favoritos - Titles
+                var lst = data.Titles;
+                for (i = 0; i < lst.length; i++) {
+                    var id = 'Titles_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
+                console.log("LIST: DONE!");
+            })
+            .fail(function () {
+                console.log("LIST: FAIL!");
+            });
+
+        $('#directorsDetailsImg').attr('src', imgLink);
+        $('#directorsDetailsModal').modal('show');
+    });
+
     //-----Load Inicial
     console.log("INFO: A primeira listagem dos dados é duplicada devido ao modo como a página funciona..."); console.log("");
     self.UpdateList();
@@ -205,6 +356,14 @@ $(document).ready(function () {
                 console.log("BANNER: FAIL!")
             });
     };
+
+    //-----trailerDiv
+    $("#btnTrailer").click(function () {
+        $('html,body').animate({
+            scrollTop: $("#trailerDiv").offset().top
+        },
+            'slow');
+    });
 
     //-----PageLoading
     //ShowLoading

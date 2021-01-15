@@ -54,7 +54,7 @@
             <div class="banner-fade">
                 <div class="container vertical-center">
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-6 align-self-center">
                             <h3><strong data-bind="text: Name"></strong></h3>
                             <i class="fa fa-calendar"></i> <p1 data-bind="text: ReleaseYear() + ' |'"></p1>
                             <p1 data-bind="foreach: Rating">
@@ -64,12 +64,15 @@
                             <i class="fa fa-bookmark-o"></i> <p1 data-bind="foreach: Categories">
                                 <!-- ko if: $index() != 0 -->,<!-- /ko -->
                                 <span data-bind="text: Name"></span>
-                            </p1><br /><br />
-                        </div>
-                        <div class="col-6">
+                            </p1><br /><br /><br />
                             <p1 data-bind="text: Description"></p1><br /><br />
+                            <button class="btn btn-success d-none" id="btnTrailer" title="Ver trailer"><i class="fa fa-television" hidden></i> Ver trailer</button><br />
                             <p1 data-bind="foreach: Type">
                                 <strong>Tipo: </strong><span data-bind="text: Name"></span>
+                            </p1><br />
+                            <strong>Países: </strong><p1 data-bind="foreach: Countries">
+                                <!-- ko if: $index() != 0 -->,<!-- /ko -->
+                                <span data-bind="text: Name"></span>
                             </p1><br />
                             <p1><strong>Adicionado em: </strong><span data-bind="text: DateAdded"></span></p1>
                         </div>
@@ -77,25 +80,66 @@
                 </div>
             </div>
         </div>
-        <!--Atores-->
-        <div class="container">
-            <h3>Atores</h3>
-            <hr />
+        <!--Trailer-->
+        <div id="trailerDiv" class="container vh-100 vertical-center d-none">
+            <div class="row w-100">
+                <div class="col-12">
+                    <h3>Trailer</h3>
+                    <hr />
+                </div>
+                <div class="col-12">
+                    <iframe id="trailer" style="height: 70vh; width:inherit" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+                </div>
+
+            </div>
         </div>
-        <div class="container">
-            <div class="row justify-content-start" data-bind="foreach: Actors">
-                <div class="col-auto p-0">
-                    <div class="col-12 p-0">
-                        <img class="image" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
-                        <div class="middle">
-                            <div class="btn-group">
-                                <a class="btn btn-outline-light actorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Actors_' + Id}, event: {click: $parent.FavouriteActors}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+        <!--Atores-->
+        <div id="actorsDiv" class="d-none">
+            <div class="container">
+                <h3>Atores</h3>
+                <hr />
+            </div>
+            <div class="container">
+                <div class="row justify-content-start" data-bind="foreach: Actors">
+                    <div class="col-auto p-0">
+                        <div class="col-12 p-0">
+                            <img class="image" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
+                            <div class="middle">
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-light actorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                    <a class="btn btn-outline-light" data-bind="attr: {id: 'Actors_' + Id}, event: {click: $parent.FavouriteActors}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-12 p-0 imgCaption">
+                            <p class="text-center" data-bind="text: Name"></p>
+                        </div>
                     </div>
-                    <div class="col-12 p-0 imgCaption">
-                        <p class="text-center" data-bind="text: Name"></p>
+                </div>
+            </div>
+        </div>
+        <!--Diretores-->
+        <div id="directorsDiv" class="d-none">
+            <div class="container">
+                <h3>Diretores</h3>
+                <hr />
+            </div>
+            <div class="container">
+                <div class="row justify-content-start" data-bind="foreach: Directors">
+                    <div class="col-auto p-0">
+                        <div class="col-12 p-0">
+                            <img class="image" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
+                            <div class="middle">
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-light directorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                    <a class="btn btn-outline-light" data-bind="attr: {id: 'Directors_' + Id}, event: {click: $parent.FavouriteDirectors}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 p-0 imgCaption">
+                            <p class="text-center" data-bind="text: Name"></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -122,12 +166,49 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-4">
-                                <img  class="img-fluid" id="actorsDetailsImg"/>
+                                <img class="img-fluid" id="actorsDetailsImg" />
                             </div>
                             <div class="col-8">
                                 <h5><i class="fa fa-film"></i> Títulos</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: ActorsDetailsTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-7">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--directorsDetailsModal-->
+    <div class="modal fade hide" id="directorsDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="directorsDetailsId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <img class="img-fluid" id="directorsDetailsImg" />
+                            </div>
+                            <div class="col-8">
+                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: DirectorsDetailsTitles">
                                     <div class="row mb-1">
                                         <div class="col-7">
                                             <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
