@@ -59,6 +59,12 @@ input[type="search"]:focus {
 .input-group {
     z-index: 0;
 }
+/*Title Image*/
+.imageLst {
+    display: block;
+    width: 162px;
+    height: 216px;
+}
 
 /*Title Deatils Banner*/
 #banner {

@@ -124,6 +124,7 @@
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -171,6 +172,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Custom\images\banner.png" />
     <Content Include="Custom\images\missingPerson.jpg" />
+    <Content Include="Custom\images\missingTitle.jpg" />
     <Content Include="Custom\images\sep.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="index.html" />

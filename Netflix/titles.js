@@ -103,6 +103,50 @@
         };
     });
 
+    //Imagens dos Types
+    function typesImg() {
+        var types = self.Type();
+        var typesQ = [];
+        for (type in types) {
+            var name = types[type].Name;
+            var newName = name.split(" ");
+            name = "";
+            for (i = 0; i < newName.length - 1; i++) {
+                name += encodeURIComponent(newName[i]) + "+"
+            };
+            name += encodeURIComponent(newName[i]);
+            typesQ.push(name)
+
+        };
+
+        var i = 0;
+        function addTypeImg() {
+            var url = 'https://thingproxy.freeboard.io/fetch/http://www.adorocinema.com/busca/?q=';
+            var name = typesQ[i];
+            var id = types[i].Id;
+            //Pedido AJAX
+            $.get(url + name)
+                .done(function (data) {
+                    var posLink = data.search('acsta.net/c_310_420/');
+                    var endLink = data.indexOf('" ', posLink);
+                    if (posLink != -1) {
+                        var imgLink = data.slice(posLink - 19, endLink).replace(/['"]+/g, '');
+                        if (!imgLink.includes("empty")) {
+                            $('#' + id).attr('src', imgLink);
+                            console.log("TYPE_IMG: DONE!");
+                        };
+                    };
+                })
+                .fail(function () {
+                    console.log("TYPE_IMG: FAIL!");
+                });
+            i++
+            if (i < typesQ.length) {
+                addTypeImg();
+            }
+        }
+        addTypeImg();
+    }
 
     //Update dataType Listing
     self.UpdateList = function () {
@@ -132,7 +176,10 @@
                 var id = dataType +'_' + favVals[i].Id;
                 $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
             };
-            
+
+            //Imagens dos Types
+            typesImg();
+
             return;
         } else {
             var url = 'http://192.168.160.58/netflix/api/' + sorting + '?page=' + page + '&pagesize=' + pageSize;
@@ -166,6 +213,9 @@
                     };
                 };
 
+                //Imagens dos Types
+                typesImg();
+
                 console.log("LIST: DONE!");
             })
             .fail(function () {
@@ -196,6 +246,9 @@
                             $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
                         };
                     };
+
+                    //Imagens dos Types
+                    typesImg();
 
                     console.log("SEARCH: DONE!");
                 })
