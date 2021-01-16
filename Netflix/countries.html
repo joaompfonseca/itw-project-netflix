@@ -80,65 +80,27 @@
                                     event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control">
                             </select>
                         </div>
-                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideControls}">
-                            <label class="mx-2 mb-2 col-form-label">Página</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button class="btn btn-outline-light mb-2" title="Primeira página" data-bind="enable: Unlock() && HasPrevious(), event: {click: FirstPage}">1</button>
-                                    <button class="btn btn-outline-light mb-2" title="Página anterior" data-bind="enable: Unlock() && HasPrevious(), event: {click: PreviousPage}"><i class="fa fa-arrow-left"></i></button>
-                                </div>
-                                <select data-bind="enable: Unlock,
-                                options: Pages,
-                                selectedOptions: CurrentPage,
-                                optionsText: 'number',
-                                optionsValue: 'value',
-                                value: CurrentPage,
-                                event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control"></select>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-light mb-2" title="Página seguinte" data-bind="enable: Unlock() && HasNext(), event: {click: NextPage}"><i class="fa fa-arrow-right"></i></button>
-                                    <button class="btn btn-outline-light mb-2" title="Última página" data-bind="enable: Unlock() && HasNext(), text: TotalPages, event:{click: LastPage}"></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideControls}">
-                            <label class="mx-2 mb-2 col-form-label">Tamanho</label>
-                            <select data-bind="enable: Unlock,
-                                options: pagesizes,
-                                selectedOptions: PageSize,
-                                optionsText: 'number',
-                                optionsValue: 'value',
-                                value: PageSize,
-                                event: {change: UpdateList}" class="mb-2 w-auto bg-transparent text-white form-control">
-                            </select>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <table class="table table-dark table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Títulos</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: Type">
-                    <tr>
-                        <td class="align-text-bottom" data-bind="text: Id"></td>
-                        <td class="align-text-bottom" data-bind="text: Name"></td>
-                        <td class="align-text-bottom" data-bind="text: Titles"></td>
-                        <td class="text-right">
+            <div class="row justify-content-start" data-bind="foreach: Type">
+                <div class="col-auto p-0">
+                    <div class="col-12 p-0">
+                        <img class="imageCountries" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
+                        <div class="middleCountries">
                             <div class="btn-group">
-                                <a class="btn btn-outline-light" data-bind="attr:  {href: $parent.DataType().toLowerCase() + 'Details.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-outline-light typesDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                                 <a class="btn btn-outline-light" data-bind="attr: {id: $parent.DataType() +'_' + Id}, event: {click: $parent.Favourite}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0 imgCaptionCountries">
+                        <p class="text-center" data-bind="text: Name"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <!--Footer-->
@@ -150,6 +112,43 @@
             </div>
         </div>
     </nav>
+    <!--typesModal-->
+    <div class="modal fade hide" id="typesModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="typesId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <img class="img-fluid" id="typesImg" />
+                            </div>
+                            <div class="col-8">
+                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: TypesTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-7">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--Modal-->
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered w-25">

@@ -171,6 +171,11 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Custom\images\banner.png" />
+    <Content Include="Custom\images\countries\bermuda.jpg" />
+    <Content Include="Custom\images\countries\cayman-islands.jpg" />
+    <Content Include="Custom\images\countries\east-germany.jpg" />
+    <Content Include="Custom\images\countries\soviet-union.jpg" />
+    <Content Include="Custom\images\countries\west-germany.jpg" />
     <Content Include="Custom\images\missingPerson.jpg" />
     <Content Include="Custom\images\missingTitle.jpg" />
     <Content Include="Custom\images\sep.ico" />

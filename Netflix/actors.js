@@ -3,12 +3,8 @@
 
     //-----Arrays
     pagesizes = [
-        { number: "10", value: 10 },
-        { number: "25", value: 25 },
-        { number: "50", value: 50 },
-        { number: "100", value: 100 },
-        { number: "250", value: 250 },
-        { number: "500", value: 500 }
+        { number: "14", value: 14 },
+        { number: "35", value: 35 }
     ];
     sorting = [
         { method: 'Por nome', value: dataType },
@@ -26,7 +22,7 @@
     self.Pages = ko.observable();
     self.TotalPages = ko.observable();
     self.CurrentPage = ko.observable('1');
-    self.PageSize = ko.observable('10');
+    self.PageSize = ko.observable('14');
     self.HasPrevious = ko.observable();
     self.HasNext = ko.observable();
     self.NextPage = function () {
