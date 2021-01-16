@@ -70,7 +70,7 @@
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
                     <div class="form-inline justify-content-end mb-2">
-                        <div class="col-12 col-sm-auto form-inline justify-content-end">
+                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideFilters}"
                             <label class="mx-2 mb-2 col-form-label">Filtro</label>
                             <select data-bind="enable: Unlock,
                                     options: sorting,
@@ -116,29 +116,22 @@
             </div>
         </div>
         <div class="container">
-            <table class="table table-dark table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Títulos</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody data-bind="foreach: Type">
-                    <tr>
-                        <td class="align-text-bottom" data-bind="text: Id"></td>
-                        <td class="align-text-bottom" data-bind="text: Name"></td>
-                        <td class="align-text-bottom" data-bind="text: Titles"></td>
-                        <td class="text-right">
+            <div class="row justify-content-start" data-bind="foreach: Type">
+                <div class="col-auto p-0">
+                    <div class="col-12 p-0">
+                        <img class="image" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
+                        <div class="middle">
                             <div class="btn-group">
-                                <a class="btn btn-outline-light" data-bind="attr:  {href: $parent.DataType().toLowerCase() + 'Details.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-outline-light typesDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                                 <a class="btn btn-outline-light" data-bind="attr: {id: $parent.DataType() +'_' + Id}, event: {click: $parent.Favourite}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                    <div class="col-12 p-0 imgCaption">
+                        <p class="text-center" data-bind="text: Name"></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <!--Footer-->
@@ -150,6 +143,43 @@
             </div>
         </div>
     </nav>
+    <!--typesModal-->
+    <div class="modal fade hide" id="typesModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="typesId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <img class="img-fluid" id="typesImg" />
+                            </div>
+                            <div class="col-8">
+                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: TypesTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-7">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--Modal-->
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered w-25">

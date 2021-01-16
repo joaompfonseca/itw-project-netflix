@@ -96,7 +96,6 @@
                     };
                     nameQ += 'Netflix+Trailer';
                     nameQ.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/['"]+/g, '%27');
-                    console.log(nameQ)
 
                     //Pedido AJAX
                     $.get('https://thingproxy.freeboard.io/fetch/https://www.youtube.com/results?search_query=' + nameQ)
@@ -104,7 +103,6 @@
                             var posLink = data.search('"/watch') + 10;
                             var vidLink = data.slice(posLink, posLink + 11);
                             $('#trailer').attr('src', 'https://www.youtube.com/embed/' + vidLink + '?rel=0&modestbranding=1');
-                            console.log('https://www.youtube.com/embed/' + vidLink + '?rel=0&modestbranding=1')
                             console.log("TRAILER: DONE!")
                         }).fail(function () {
                             console.log("TRAILER: FAIL!")
