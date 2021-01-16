@@ -52,6 +52,7 @@
 
     self.Sorting = ko.observable(dataType);
 
+    //Favoritos - Types
     self.Favourite = function () {
         var type = this;
         var id = dataType + '_' + this.Id;
@@ -63,6 +64,20 @@
             $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
         }
     };
+
+    //Favoritos - Titles
+    self.FavouriteTitles = function () {
+        var type = this;
+        var id = 'Titles_' + this.Id;
+        if (id in amplify.store()) {
+            amplify.store(id, null);
+            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+        } else {
+            amplify.store(id, type);
+            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+        }
+    };
+
     self.HideControls = ko.computed(function () {
         if ((self.Sorting() == 'Favourites') || !self.Unlock()) {
             return 'hidden';
@@ -77,6 +92,56 @@
             return 'visible';
         };
     });
+
+    self.TypesImg = ko.observableArray();
+    self.TypesTitles = ko.observable();
+
+    //Imagens dos Types
+    function typesImg() {
+        var types = self.Type();
+        var typesQ = [];
+        for (type in types) {
+            var name = types[type].Name;
+            var newName = name.split(" ");
+            name = "";
+            for (i = 0; i < newName.length - 1; i++) {
+                name += newName[i] + "+"
+            };
+            name += newName[i];
+            typesQ.push(name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/['"]+/g, '%27'))
+        };
+
+        var i = 0;
+        var typesImg = [];
+        function addTypeImg() {
+            var url = 'https://thingproxy.freeboard.io/fetch/http://www.adorocinema.com/busca/?q=';
+            var name = typesQ[i];
+            var id = types[i].Id;
+            //Pedido AJAX
+            $.get(url + name)
+                .done(function (data) {
+                    var posLink = data.search('acsta.net/c_162_216/');
+                    var endLink = data.indexOf('" ', posLink);
+                    if (posLink != -1) {
+                        var imgLink = data.slice(posLink - 19, endLink).replace(/['"]+/g, '');
+                        if (!imgLink.includes("empty")) {
+                            $('#' + id).attr('src', imgLink);
+                            typesImg.push({ Id: id, Img: imgLink });
+                            console.log("TYPE_IMG: DONE!");
+                        };
+                    };
+                })
+                .fail(function () {
+                    console.log("TYPE_IMG: FAIL!");
+                });
+            i++
+            if (i < typesQ.length) {
+                addTypeImg();
+            }
+        }
+        addTypeImg();
+        self.TypesImg(typesImg);
+    }
 
     //Update dataType Listing
     self.UpdateList = function () {
@@ -102,6 +167,9 @@
                 var id = dataType + '_' + favVals[i].Id;
                 $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
             };
+
+            //Imagens dos Types
+            typesImg();
 
             return;
         } else {
@@ -136,12 +204,57 @@
                     };
                 };
 
+                //Imagens dos Types
+                typesImg();
+
                 console.log("LIST: DONE!");
             })
             .fail(function () {
                 console.log("LIST: FAIL!");
             });
     };
+
+    //-----typesModal
+    $(document).on("click", ".typesDetails", function () {
+        var id = $(this).attr('id');
+        var typesImg = self.TypesImg();
+        var imgLink = "../Custom/images/missingPerson.jpg";
+
+        for (i in typesImg) {
+            if (typesImg[i].Id.toString() == id) {
+                imgLink = typesImg[i].Img;
+            };
+        };
+
+        var url = 'http://192.168.160.58/netflix/api/'+dataType+'/' + id;
+
+        //Pedido AJAX;
+        console.log("LIST: Id: " + id);
+        $.getJSON(url)
+            .done(function (data) {
+                self.TypesTitles(data.Titles);
+
+                $('#typesId').text('(' + data.Id + ') ' + data.Name);
+                //Favoritos - Titles
+                var lst = data.Titles;
+                for (i = 0; i < lst.length; i++) {
+                    var id = 'Titles_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
+                console.log("LIST: DONE!");
+            })
+            .fail(function () {
+                console.log("LIST: FAIL!");
+            });
+
+        $('#typesImg').attr('src', imgLink);
+        $('#typesModal').modal('show');
+    });
 
     //Update dataType Search
     self.UpdateSearch = function () {
@@ -166,6 +279,9 @@
                             $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
                         };
                     };
+
+                    //Imagens dos Types
+                    typesImg();
 
                     console.log("SEARCH: DONE!");
                 })
