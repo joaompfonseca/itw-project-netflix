@@ -7,20 +7,25 @@
 
     <!--Separador-->
     <link href="../Custom/images/sep.ico" rel="icon" type="image/png" />
-    <title>Netflix - Início</title>
+    <title>Netflix - Diretores</title>
 
     <!--Estilos-->
-    <!--Bootstrap--><link rel="stylesheet" href="../Content/bootstrap.min.css" />
-    <!--Font Awesome--><link rel="stylesheet" href="../Content/font-awesome.min.css" />
-    <!--jQueryUI--><link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="../Content/bootstrap.min.css" />
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="../Content/font-awesome.min.css" />
+    <!--jQueryUI-->
+    <link rel="stylesheet" href="../Content/themes/base/jquery-ui.min.css" />
 
     <link rel="stylesheet" href="../Custom/styles/style.css" />
+
+    <link href="https://cdn.rawgit.com/anthonykrivonos/flix-carousel/65556d56/src/carousel.css" rel="stylesheet">
 </head>
 <body>
     <!--Navbar-->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="index.html" title="Início">
                 <img class="custom-nav-img" src="../Custom/images/nav.png" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop">
@@ -28,14 +33,33 @@
             </button>
             <div class="collapse navbar-collapse my-2" id="navbarTop">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="actors.html">Atores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="titles.html">Filmes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="titles.html" title="Títulos"><i class="fa fa-film"></i> Títulos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="actors.html" title="Atores"><i class="fa fa-users"></i> Atores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="directors.html" title="Diretores"><i class="fa fa-users"></i> Diretores</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bars"></i> Outros
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="categories.html" title="Categorias"><i class="fa fa-bookmark"></i> Categorias</a>
+                            <a class="dropdown-item" href="ratings.html" title="Classificações"><i class="fa fa-star"></i> Classificações</a>
+                            <a class="dropdown-item" href="countries.html" title="Países"><i class="fa fa-flag"></i> Países</a>
+                            <a class="dropdown-item" href="stats.html" title="Estatísticas"><i class="fa fa-bar-chart"></i> Estatísticas</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="favourites.html" title="Favoritos"><i class="fa fa-heart"></i> Favoritos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
                 <form class="form-inline">
-                    <input class="form-control w-auto mr-2" id="search" type="search" data-bind="value: Query, attr: {placeholder: Type}, event: {change: UpdateSearch}">
-                    <button class="btn btn-outline-success" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}"><i class="fa fa-search"></i></button>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary border-right-0" data-bind="enable: !Unlock(), event: {click: Refresh}"><i class="fa fa-refresh"></i></button>
+                        </div>
+                        <input class="form-control w-auto" id="search" type="search" autocomplete="off" data-bind="value: Query, attr: {placeholder: 'Pesquisar ' + DataText().toLowerCase(), title : 'Pesquisar ' + DataText().toLowerCase()}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success border-left-0" type="submit" hidefocus="true" data-bind="event: {click: UpdateSearch}" title="Pesquisar"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -80,64 +104,72 @@
             <div class="container">
                 <h2>EM DESTAQUE</h2>
             </div>
-            <div class="row">
-                <img class="row_poster row_posterLarge" src="http://br.web.img3.acsta.net/c_310_420/pictures/19/10/04/19/42/5605017.jpg" alt="1917">
-                <img class="row_poster row_posterLarge" src="https://br.web.img3.acsta.net/pictures/20/01/28/22/54/2304385.jpg" alt="Jojo Rabbit">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
+            <div class="carousel">
+                <div class="carousel-row" id="destaques">
+                    <button><img class="imageLst" id="The Greatest Showman" src="../Custom/images/missingTitle.jpg" /></button>
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                </div>
             </div>
         </div>
         <div style="margin-top: 40px">
             <div class="container">
                 <h2>COMÉDIA</h2>
             </div>
-            <div class="row">
-                <img class="row_poster row_posterLarge" src="http://br.web.img3.acsta.net/c_310_420/pictures/19/10/04/19/42/5605017.jpg" alt="1917">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
+            <div class="carousel">
+                <div class="carousel-row">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                </div>                                      
+            </div>                                          
+        </div>                                              
+        <div style="margin-top: 40px">                      
+            <div class="container">                         
+                <h2>AÇÃO</h2>                               
+            </div>                                          
+            <div class="carousel">
+                <div class="carousel-row">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                    <img class="row_poster row_posterLarge" id="" alt="">
+                </div>
             </div>
         </div>
         <div style="margin-top: 40px">
             <div class="container">
                 <h2>AÇÃO</h2>
             </div>
-            <div class="row">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-            </div>
-        </div>
-        <div style="margin-top: 40px">
-            <div class="container">
-                <h2>AÇÃO</h2>
-            </div>
-            <div class="row">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
-                <img class="row_poster row_posterLarge" src="https://image.tmdb.org/t/p/original/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg">
+            <div class="carousel">
+                <div class="carousel-row">
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                    <img class="row_poster row_posterLarge" >
+                </div>
             </div>
         </div>
     </main>
