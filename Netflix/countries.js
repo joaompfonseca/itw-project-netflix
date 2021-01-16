@@ -209,7 +209,7 @@
     $(document).on("click", ".typesDetails", function () {
         var id = $(this).attr('id');
         var typesImg = self.TypesImg();
-        var imgLink = "../Custom/images/missingPerson.jpg";
+        var imgLink = "";
 
         for (i in typesImg) {
             if (typesImg[i].Id.toString() == id) {

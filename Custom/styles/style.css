@@ -158,6 +158,12 @@ input[type="search"]:focus {
     max-width: 162px;
 }
 /*---------------*/
+
+.countriesDetails {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 ::-webkit-scrollbar {
     width: 1em;
 }

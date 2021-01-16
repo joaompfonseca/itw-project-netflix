@@ -24,6 +24,9 @@
     self.DirectorsImg = ko.observableArray();
     self.DirectorsDetailsTitles = ko.observable();
 
+    self.CountriesImg = ko.observableArray();
+    self.CountriesDetailsTitles = ko.observable();
+
     //Favoritos - Atores
     self.FavouriteActors = function () {
         var type = this;
@@ -41,6 +44,19 @@
     self.FavouriteDirectors = function () {
         var type = this;
         var id = 'Directors_' + this.Id;
+        if (id in amplify.store()) {
+            amplify.store(id, null);
+            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+        } else {
+            amplify.store(id, type);
+            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+        }
+    };
+
+    //Favoritos - Países
+    self.FavouriteCountries = function () {
+        var type = this;
+        var id = 'Countries_' + this.Id;
         if (id in amplify.store()) {
             amplify.store(id, null);
             $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
@@ -237,6 +253,52 @@
                     self.DirectorsImg(directorsImg);
                 }
 
+                //-----Países
+
+                //Imagens dos Países
+                var countries = self.Countries();
+                var countriesQ = [];
+                for (country in countries) {
+                    var name = countries[country].Name;
+                    if (name == "United States") {
+                        name = "united-states-of-america";
+                        countriesQ.push(name);
+                        continue;
+                    } else if (name == "Hong Kong") {
+                        name = "hongkong";
+                        countriesQ.push(name);
+                        continue;
+                    }
+                    var newName = name.split(" ");
+                    name = "";
+                    for (i = 0; i < newName.length - 1; i++) {
+                        name += newName[i].toLowerCase() + "-"
+                    };
+                    name += newName[i].toLowerCase();
+                    countriesQ.push(name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/['"]+/g, '%27'))
+                };
+
+                var i = 0;
+                var countriesImg = [];
+                function addCountryImg() {
+                    var name = countriesQ[i];
+                    var id = countries[i].Id;
+                    if (name == ("bermuda") || name == ("cayman-islands") || name == ("east-germany") || name == ("soviet-union") || name == ("west-germany")) {
+                        var imgLink = "../Custom/images/countries/" + name + ".jpg";
+                    } else {
+                        var imgLink = 'https://cdn.countryflags.com/thumbs/' + name + '/flag-square-250.png';
+                    };
+
+                    $('#' + id).attr('src', imgLink);
+                    countriesImg.push({ Id: id, Img: imgLink });
+                    i++
+                    if (i < countriesQ.length) {
+                        addCountryImg();
+                    }
+                }
+                addCountryImg();
+                self.CountriesImg(countriesImg);
+
                 console.log("LIST: DONE!");
             })
             .fail(function () {
@@ -326,6 +388,48 @@
 
         $('#directorsDetailsImg').attr('src', imgLink);
         $('#directorsDetailsModal').modal('show');
+    });
+
+    //-----countriesModal
+    $(document).on("click", ".countriesDetails", function () {
+        var id = $(this).attr('id');
+        var countriesImg = self.CountriesImg();
+        var imgLink = "";
+
+        for (i in countriesImg) {
+            if (countriesImg[i].Id.toString() == id) {
+                imgLink = countriesImg[i].Img;
+            };
+        };
+
+        var url = 'http://192.168.160.58/netflix/api/Countries/' + id;
+
+        //Pedido AJAX;
+        console.log("LIST: Id: " + id);
+        $.getJSON(url)
+            .done(function (data) {
+                self.CountriesDetailsTitles(data.Titles);
+
+                $('#countriesDetailsId').text('(' + data.Id + ') ' + data.Name);
+                //Favoritos - Titles
+                var lst = data.Titles;
+                for (i = 0; i < lst.length; i++) {
+                    var id = 'Titles_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
+                console.log("LIST: DONE!");
+            })
+            .fail(function () {
+                console.log("LIST: FAIL!");
+            });
+
+        $('#countriesDetailsImg').attr('src', imgLink);
+        $('#countriesDetailsModal').modal('show');
     });
 
     //-----Load Inicial

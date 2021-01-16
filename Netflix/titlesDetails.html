@@ -72,7 +72,7 @@
                             </p1><br />
                             <strong>Países: </strong><p1 data-bind="foreach: Countries">
                                 <!-- ko if: $index() != 0 -->,<!-- /ko -->
-                                <span data-bind="text: Name"></span>
+                                <span class="countriesDetails" data-bind="text: Name,attr: {id: Id}"></span>
                             </p1><br />
                             <p1><strong>Adicionado em: </strong><span data-bind="text: DateAdded"></span></p1>
                         </div>
@@ -207,6 +207,43 @@
                                 <h5><i class="fa fa-film"></i> Títulos</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: DirectorsDetailsTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-7">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--countriesDetailsModal-->
+    <div class="modal fade hide" id="countriesDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="countriesDetailsId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <img class="img-fluid" id="countriesDetailsImg" />
+                            </div>
+                            <div class="col-8">
+                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: CountriesDetailsTitles">
                                     <div class="row mb-1">
                                         <div class="col-7">
                                             <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
