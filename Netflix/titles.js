@@ -121,7 +121,7 @@
 
         var i = 0;
         function addTypeImg() {
-            var url = 'https://thingproxy.freeboard.io/fetch/http://www.adorocinema.com/busca/?q=';
+            var url = 'https://cors-anywhere.herokuapp.com/http://www.adorocinema.com/busca/?q=';
             var name = typesQ[i];
             var id = types[i].Id;
             //Pedido AJAX

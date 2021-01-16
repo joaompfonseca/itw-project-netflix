@@ -173,3 +173,15 @@ select:disabled {
     visibility: hidden
 }
 
+.scroll {
+    overflow: auto;
+    max-width: initial;
+}
+
+.carousel {
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
