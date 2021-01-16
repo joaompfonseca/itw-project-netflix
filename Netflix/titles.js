@@ -121,7 +121,15 @@
 
         var i = 0;
         function addTypeImg() {
-            var url = 'https://thingproxy.freeboard.io/fetch/http://www.adorocinema.com/busca/?q=';
+            //Filme ou Série??
+            var typeName = types[i].TypeName;
+            if (typeName == "Movie") {
+                typeName = "movie";
+            } else {
+                typeName = "series";
+            };
+
+            var url = 'https://cors-anywhere.herokuapp.com/http://www.adorocinema.com/busca/' + typeName + '/?q=';
             var name = typesQ[i];
             var id = types[i].Id;
             //Pedido AJAX
