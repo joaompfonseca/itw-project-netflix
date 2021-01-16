@@ -53,19 +53,6 @@
         }
     };
 
-    //Favoritos - Países
-    self.FavouriteCountries = function () {
-        var type = this;
-        var id = 'Countries_' + this.Id;
-        if (id in amplify.store()) {
-            amplify.store(id, null);
-            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
-        } else {
-            amplify.store(id, type);
-            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
-        }
-    };
-
     //Favoritos - Titles
     self.FavouriteTitles = function () {
         var type = this;
@@ -254,7 +241,6 @@
                 }
 
                 //-----Países
-
                 //Imagens dos Países
                 var countries = self.Countries();
                 var countriesQ = [];
