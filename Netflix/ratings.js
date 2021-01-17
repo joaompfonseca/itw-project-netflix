@@ -93,6 +93,7 @@
         $.getJSON(url)
             .done(function (data) {
                 self.Type(data);
+                self.TotalType(data.length);
 
                 //Favoritos
                 var lst = data

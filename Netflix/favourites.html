@@ -7,12 +7,15 @@
 
     <!--Separador-->
     <link href="../Custom/images/sep.ico" rel="icon" type="image/png" />
-    <title>Netflix - Detalhes do Título</title>
+    <title>Netflix - Favoritos</title>
 
     <!--Estilos-->
-    <!--Bootstrap--><link rel="stylesheet" href="../Content/bootstrap.min.css" />
-    <!--Font Awesome--><link rel="stylesheet" href="../Content/font-awesome.min.css" />
-    <!--jQueryUI--><link rel="stylesheet" href="../Content/themes/base/jquery-ui.min.css" />
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="../Content/bootstrap.min.css" />
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="../Content/font-awesome.min.css" />
+    <!--jQueryUI-->
+    <link rel="stylesheet" href="../Content/themes/base/jquery-ui.min.css" />
 
     <link rel="stylesheet" href="../Custom/styles/style.css" />
 </head>
@@ -42,7 +45,7 @@
                             <a class="dropdown-item" href="stats.html" title="Estatísticas"><i class="fa fa-bar-chart"></i> Estatísticas</a>
                         </div>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="favourites.html" title="Favoritos"><i class="fa fa-heart"></i> Favoritos</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="favourites.html" title="Favoritos"><i class="fa fa-heart"></i> Favoritos</a></li>
                     <!--<li class="nav-item"><a class="nav-link" href=""></a></li>-->
                 </ul>
             </div>
@@ -50,95 +53,183 @@
     </nav>
     <!--Main-->
     <main>
-        <div class="jumbotron jumbotron-fluid" id="banner">
-            <div class="banner-fade">
-                <div class="container vertical-center">
-                    <div class="row">
-                        <div class="col-6 align-self-center">
-                            <h3><strong data-bind="text: Name"></strong></h3>
-                            <i class="fa fa-calendar"></i> <p1 data-bind="text: ReleaseYear() + ' |'"></p1>
-                            <p1 data-bind="foreach: Rating">
-                                <i class="fa fa-star-o"></i> <span class="ratingsDetails" data-bind="text: Code,attr: {id: Id}"></span> |
-                            </p1>
-                            <i class="fa fa-clock-o"></i> <p1 data-bind="text: Duration() + ' |'"></p1>
-                            <i class="fa fa-bookmark-o"></i> <p1 data-bind="foreach: Categories">
-                                <!-- ko if: $index() != 0 -->,<!-- /ko -->
-                                <span class="categoriesDetails" data-bind="text: Name,attr: {id: Id}"></span>
-                            </p1><br /><br /><br />
-                            <p1 data-bind="text: Description"></p1><br /><br />
-                            <button class="btn btn-success d-none" id="btnTrailer" title="Ver trailer"><i class="fa fa-television" hidden></i> Ver trailer</button><br />
-                            <p1 data-bind="foreach: Type">
-                                <strong>Tipo: </strong><span data-bind="text: Name"></span>
-                            </p1><br />
-                            <strong>Países: </strong><p1 data-bind="foreach: Countries">
-                                <!-- ko if: $index() != 0 -->,<!-- /ko -->
-                                <span class="countriesDetails" data-bind="text: Name,attr: {id: Id}"></span>
-                            </p1><br />
-                            <p1><strong>Adicionado em: </strong><span data-bind="text: DateAdded"></span></p1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Trailer-->
-        <div id="trailerDiv" class="container vh-100 vertical-center d-none">
-            <div class="row w-100">
+        <div class="container">
+            <div class="row">
                 <div class="col-12">
-                    <h3>Trailer</h3>
+                    <h3>Lista de Favoritos</h3>
                     <hr />
                 </div>
-                <div class="col-12">
-                    <iframe id="trailer" style="height: 70vh; width:inherit" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="row justify-content-end mb-2">
+                <div class="col-auto">
+                    <label>Apagar tudo </label>
+                    <button class="btn btn-danger" id="deleteAll" title="Apagar tudo"><i class="fa fa-trash-o"></i></button>
                 </div>
             </div>
-        </div>
-        <!--Atores-->
-        <div id="actorsDiv" class="d-none">
-            <div class="container">
-                <h3>Atores</h3>
-                <hr />
-            </div>
-            <div class="container">
-                <div class="row justify-content-start" data-bind="foreach: Actors">
-                    <div class="col-auto p-0">
-                        <div class="col-12 p-0">
-                            <img class="image" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
-                            <div class="middle">
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-light actorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                                    <a class="btn btn-outline-light" data-bind="css: 'Actors_' + Id, event: {click: $parent.FavouriteActors}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 p-0 imgCaption">
-                            <p class="text-center" data-bind="text: Name"></p>
-                        </div>
-                    </div>
+            <ul class="nav nav-tabs nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#titles" data-toggle="tab" title="Títulos">Títulos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#actors" data-toggle="tab" title="Atores">Atores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#directors" data-toggle="tab" title="Diretores">Diretores</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#categories" data-toggle="tab" title="Categorias">Categorias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#ratings" data-toggle="tab" title="Classificações">Classificações</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#countries" data-toggle="tab" title="Países">Países</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <!--Titles-->
+                <div id="titles" class="tab-pane fade show active">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: Titles">
+                            <tr>
+                                <td class="align-text-bottom" data-bind="text: Id"></td>
+                                <td class="align-text-bottom w-75" data-bind="text: Name"></td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-light" data-bind="attr: {href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-outline-light" data-bind="css: 'Titles_' + Id, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class='fa fa-heart' style='color: red'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </div>
-        <!--Diretores-->
-        <div id="directorsDiv" class="d-none">
-            <div class="container">
-                <h3>Diretores</h3>
-                <hr />
-            </div>
-            <div class="container">
-                <div class="row justify-content-start" data-bind="foreach: Directors">
-                    <div class="col-auto p-0">
-                        <div class="col-12 p-0">
-                            <img class="image" data-bind="attr: {id: Id}" src="../Custom/images/missingPerson.jpg" />
-                            <div class="middle">
-                                <div class="btn-group">
-                                    <a class="btn btn-outline-light directorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
-                                    <a class="btn btn-outline-light" data-bind="css: 'Directors_' + Id, event: {click: $parent.FavouriteDirectors}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 p-0 imgCaption">
-                            <p class="text-center" data-bind="text: Name"></p>
-                        </div>
-                    </div>
+                <!--Actors-->
+                <div id="actors" class="tab-pane fade">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: Actors">
+                            <tr>
+                                <td class="align-text-bottom" data-bind="text: Id"></td>
+                                <td class="align-text-bottom  w-75" data-bind="text: Name"></td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-light actorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-outline-light" data-bind="css: 'Actors_' + Id, event: {click: $parent.FavouriteActors}" title="Adicionar aos favoritos"><i class='fa fa-heart' style='color: red'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--Directors-->
+                <div id="directors" class="tab-pane fade">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: Directors">
+                            <tr>
+                                <td class="align-text-bottom" data-bind="text: Id"></td>
+                                <td class="align-text-bottom  w-75" data-bind="text: Name"></td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-light directorsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-outline-light" data-bind="css: 'Directors_' + Id, event: {click: $parent.FavouriteDirectors}" title="Adicionar aos favoritos"><i class='fa fa-heart' style='color: red'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--Categories-->
+                <div id="categories" class="tab-pane fade">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: Categories">
+                            <tr>
+                                <td class="align-text-bottom" data-bind="text: Id"></td>
+                                <td class="align-text-bottom  w-75" data-bind="text: Name"></td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-light categoriesDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-outline-light" data-bind="css: 'Categories_' + Id, event: {click: $parent.FavouriteCategories}" title="Adicionar aos favoritos"><i class='fa fa-heart' style='color: red'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--Ratings-->
+                <div id="ratings" class="tab-pane fade">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Código</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: Ratings">
+                            <tr>
+                                <td class="align-text-bottom" data-bind="text: Id"></td>
+                                <td class="align-text-bottom  w-75" data-bind="text: Code"></td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-light ratingsDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-outline-light" data-bind="css: 'Ratings_' + Id, event: {click: $parent.FavouriteRatings}" title="Adicionar aos favoritos"><i class='fa fa-heart' style='color: red'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!--Países-->
+                <div id="countries" class="tab-pane fade">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: Countries">
+                            <tr>
+                                <td class="align-text-bottom" data-bind="text: Id"></td>
+                                <td class="align-text-bottom  w-75" data-bind="text: Name"></td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <a class="btn btn-outline-light countriesDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-outline-light" data-bind="css: 'Countries_' + Id, event: {click: $parent.FavouriteCountries}" title="Adicionar aos favoritos"><i class='fa fa-heart' style='color: red'></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -163,18 +254,15 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col-4">
-                                <img class="img-fluid" id="actorsDetailsImg" />
-                            </div>
-                            <div class="col-8">
+                            <div class="col-12">
                                 <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: ActorsDetailsTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: ActorsDetailsTitles">
                                     <div class="row mb-1">
-                                        <div class="col-7">
+                                        <div class="col-9">
                                             <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-3">
                                             <div class="btn-group">
                                                 <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                                                 <a class="btn btn-outline-light" data-bind="css: 'Titles_' + Id, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
@@ -200,18 +288,15 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col-4">
-                                <img class="img-fluid" id="directorsDetailsImg" />
-                            </div>
-                            <div class="col-8">
+                            <div class="col-12">
                                 <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: DirectorsDetailsTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: DirectorsDetailsTitles">
                                     <div class="row mb-1">
-                                        <div class="col-7">
+                                        <div class="col-9">
                                             <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-3">
                                             <div class="btn-group">
                                                 <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                                                 <a class="btn btn-outline-light" data-bind="css: 'Titles_' + Id, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
@@ -237,18 +322,15 @@
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col-4">
-                                <img class="img-fluid" id="countriesDetailsImg" />
-                            </div>
-                            <div class="col-8">
+                            <div class="col-12">
                                 <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: CountriesDetailsTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: CountriesDetailsTitles">
                                     <div class="row mb-1">
-                                        <div class="col-7">
+                                        <div class="col-9">
                                             <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-3">
                                             <div class="btn-group">
                                                 <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                                                 <a class="btn btn-outline-light" data-bind="css: 'Titles_' + Id, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
@@ -348,9 +430,9 @@
     <script src="../Scripts/jquery-3.5.1.min.js"></script>
     <script src="../Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="../Scripts/knockout-3.5.1.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../Scripts/bootstrap.bundle.min.js"></script>
     <script src="../Scripts/amplify.min.js"></script>
 
-    <script src="titlesDetails.js"></script>
+    <script src="favourites.js"></script>
 </body>
 </html>

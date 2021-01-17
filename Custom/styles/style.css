@@ -29,7 +29,14 @@ hr {
 .nav-link, .dropdown-item {
     color: #b1b1b1;
 }
-
+a.active.nav-link {
+    background-color: #000 !important;
+    border-bottom-color: #000 !important;
+    color: #fff !important;
+}
+th {
+    border: 0px !important;
+}
 /*Background Color*/
 body, .navbar, .dropdown-menu, tbody, tr, option {
     background-color: #000000

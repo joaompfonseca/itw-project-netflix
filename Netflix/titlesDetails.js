@@ -42,10 +42,10 @@
         var id = 'Actors_' + this.Id;
         if (id in amplify.store()) {
             amplify.store(id, null);
-            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+            $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
         } else {
             amplify.store(id, type);
-            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+            $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
         }
     };
 
@@ -55,10 +55,10 @@
         var id = 'Directors_' + this.Id;
         if (id in amplify.store()) {
             amplify.store(id, null);
-            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+            $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
         } else {
             amplify.store(id, type);
-            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+            $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
         }
     };
 
@@ -68,10 +68,10 @@
         var id = 'Titles_' + this.Id;
         if (id in amplify.store()) {
             amplify.store(id, null);
-            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+            $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
         } else {
             amplify.store(id, type);
-            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+            $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
         }
     };
 
@@ -136,9 +136,9 @@
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Actors_' + lst[i].Id;
                     if (id in amplify.store()) {
-                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
                     } else {
-                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
                     };
                 };
 
@@ -197,9 +197,9 @@
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Directors_' + lst[i].Id;
                     if (id in amplify.store()) {
-                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
                     } else {
-                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
                     };
                 };
 
@@ -284,7 +284,7 @@
                         var imgLink = 'https://cdn.countryflags.com/thumbs/' + name + '/flag-square-250.png';
                     };
 
-                    $('#' + id).attr('src', imgLink);
+                    $('.' + id).attr('src', imgLink);
                     countriesImg.push({ Id: id, Img: imgLink });
                     i++
                     if (i < countriesQ.length) {
@@ -328,9 +328,9 @@
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Titles_' + lst[i].Id;
                     if (id in amplify.store()) {
-                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
                     } else {
-                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
                     };
                 };
 
@@ -370,10 +370,11 @@
                 var lst = data.Titles;
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Titles_' + lst[i].Id;
+
                     if (id in amplify.store()) {
-                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
                     } else {
-                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
                     };
                 };
 
@@ -414,9 +415,9 @@
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Titles_' + lst[i].Id;
                     if (id in amplify.store()) {
-                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
                     } else {
-                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
                     };
                 };
 
@@ -449,9 +450,9 @@
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Titles_' + lst[i].Id;
                     if (id in amplify.store()) {
-                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
                     } else {
-                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
                     };
                 };
 
@@ -484,9 +485,9 @@
                 for (i = 0; i < lst.length; i++) {
                     var id = 'Titles_' + lst[i].Id;
                     if (id in amplify.store()) {
-                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                        $('.' + id).html("<i class='fa fa-heart' style='color: red'></i>");
                     } else {
-                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                        $('.' + id).html("<i class='fa fa-heart-o' style=''></i>");
                     };
                 };
 
