@@ -33,6 +33,9 @@
     self.CategoriesDetailsTitles = ko.observable();
     self.CategoriesDetailsTitlesLength = ko.observable();
 
+    self.RatingsDetailsTitles = ko.observable();
+    self.RatingsDetailsTitlesLength = ko.observable();
+
     //Favoritos - Atores
     self.FavouriteActors = function () {
         var type = this;
@@ -459,6 +462,41 @@
             });
 
         $('#categoriesDetailsModal').modal('show');
+    });
+
+    //-----ratingsModal
+    $(document).on("click", ".ratingsDetails", function () {
+        var id = $(this).attr('id');
+
+        var url = 'http://192.168.160.58/netflix/api/Ratings/' + id;
+
+        //Pedido AJAX;
+        console.log("LIST: Id: " + id);
+        $.getJSON(url)
+            .done(function (data) {
+                self.RatingsDetailsTitles(data.Titles);
+                self.RatingsDetailsTitlesLength(data.Titles.length);
+
+                $('#ratingsDetailsId').text('(' + data.Id + ') ' + data.Classe);
+                $('#ratingsDetailsDesc').text(data.Description);
+                //Favoritos - Titles
+                var lst = data.Titles;
+                for (i = 0; i < lst.length; i++) {
+                    var id = 'Titles_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
+                console.log("LIST: DONE!");
+            })
+            .fail(function () {
+                console.log("LIST: FAIL!");
+            });
+
+        $('#ratingsDetailsModal').modal('show');
     });
 
     //-----Load Inicial

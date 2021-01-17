@@ -181,6 +181,8 @@
     <Content Include="Custom\images\sep.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="index.html" />
+    <Content Include="Netflix\ratings.html" />
+    <Content Include="Netflix\ratings.js" />
     <Content Include="Netflix\directors.html" />
     <Content Include="Netflix\directors.js" />
     <Content Include="Netflix\countries.html" />

@@ -58,7 +58,7 @@
                             <h3><strong data-bind="text: Name"></strong></h3>
                             <i class="fa fa-calendar"></i> <p1 data-bind="text: ReleaseYear() + ' |'"></p1>
                             <p1 data-bind="foreach: Rating">
-                                <i class="fa fa-star-o"></i> <span data-bind="text: Code + ' |'"></span>
+                                <i class="fa fa-star-o"></i> <span class="ratingsDetails" data-bind="text: Code,attr: {id: Id}"></span> |
                             </p1>
                             <i class="fa fa-clock-o"></i> <p1 data-bind="text: Duration() + ' |'"></p1>
                             <i class="fa fa-bookmark-o"></i> <p1 data-bind="foreach: Categories">
@@ -278,6 +278,43 @@
                                 <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: CategoriesDetailsTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: CategoriesDetailsTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-9">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--categoriesDetailsModal-->
+    <div class="modal fade hide" id="ratingsDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="ratingsDetailsId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5><i class="fa fa-info-circle"></i> Descrição</h5>
+                                <hr />
+                                <p id="ratingsDetailsDesc"></p>
+                                <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: RatingsDetailsTitlesLength"></span>)</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: RatingsDetailsTitles">
                                     <div class="row mb-1">
                                         <div class="col-9">
                                             <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
