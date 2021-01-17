@@ -63,7 +63,7 @@
                             <i class="fa fa-clock-o"></i> <p1 data-bind="text: Duration() + ' |'"></p1>
                             <i class="fa fa-bookmark-o"></i> <p1 data-bind="foreach: Categories">
                                 <!-- ko if: $index() != 0 -->,<!-- /ko -->
-                                <span data-bind="text: Name"></span>
+                                <span class="categoriesDetails" data-bind="text: Name,attr: {id: Id}"></span>
                             </p1><br /><br /><br />
                             <p1 data-bind="text: Description"></p1><br /><br />
                             <button class="btn btn-success d-none" id="btnTrailer" title="Ver trailer"><i class="fa fa-television" hidden></i> Ver trailer</button><br />
@@ -167,7 +167,7 @@
                                 <img class="img-fluid" id="actorsDetailsImg" />
                             </div>
                             <div class="col-8">
-                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: ActorsDetailsTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: ActorsDetailsTitles">
                                     <div class="row mb-1">
@@ -204,7 +204,7 @@
                                 <img class="img-fluid" id="directorsDetailsImg" />
                             </div>
                             <div class="col-8">
-                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: DirectorsDetailsTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: DirectorsDetailsTitles">
                                     <div class="row mb-1">
@@ -241,7 +241,7 @@
                                 <img class="img-fluid" id="countriesDetailsImg" />
                             </div>
                             <div class="col-8">
-                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: CountriesDetailsTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: CountriesDetailsTitles">
                                     <div class="row mb-1">
@@ -249,6 +249,40 @@
                                             <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
                                         </div>
                                         <div class="col-5">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--categoriesDetailsModal-->
+    <div class="modal fade hide" id="categoriesDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="categoriesDetailsId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: CategoriesDetailsTitlesLength"></span>)</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: CategoriesDetailsTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-9">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-3">
                                             <div class="btn-group">
                                                 <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                                                 <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>

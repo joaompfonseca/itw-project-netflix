@@ -20,12 +20,18 @@
 
     self.ActorsImg = ko.observableArray();
     self.ActorsDetailsTitles = ko.observable();
+    self.ActorsDetailsTitlesLength = ko.observable();
 
     self.DirectorsImg = ko.observableArray();
     self.DirectorsDetailsTitles = ko.observable();
+    self.DirectorsDetailsTitlesLength = ko.observable();
 
     self.CountriesImg = ko.observableArray();
     self.CountriesDetailsTitles = ko.observable();
+    self.CountriesDetailsTitlesLength = ko.observable();
+
+    self.CategoriesDetailsTitles = ko.observable();
+    self.CategoriesDetailsTitlesLength = ko.observable();
 
     //Favoritos - Atores
     self.FavouriteActors = function () {
@@ -311,6 +317,7 @@
         $.getJSON(url)
             .done(function (data) {
                 self.ActorsDetailsTitles(data.Titles);
+                self.ActorsDetailsTitlesLength(data.Titles.length);
 
                 $('#actorsDetailsId').text('(' + data.Id + ') ' + data.Name);
                 //Favoritos - Titles
@@ -353,6 +360,7 @@
         $.getJSON(url)
             .done(function (data) {
                 self.DirectorsDetailsTitles(data.Titles);
+                self.DirectorsDetailsTitlesLength(data.Titles.length);
 
                 $('#directorsDetailsId').text('(' + data.Id + ') ' + data.Name);
                 //Favoritos - Titles
@@ -395,6 +403,7 @@
         $.getJSON(url)
             .done(function (data) {
                 self.CountriesDetailsTitles(data.Titles);
+                self.CountriesDetailsTitlesLength(data.Titles.length);
 
                 $('#countriesDetailsId').text('(' + data.Id + ') ' + data.Name);
                 //Favoritos - Titles
@@ -416,6 +425,40 @@
 
         $('#countriesDetailsImg').attr('src', imgLink);
         $('#countriesDetailsModal').modal('show');
+    });
+
+    //-----categoriesModal
+    $(document).on("click", ".categoriesDetails", function () {
+        var id = $(this).attr('id');
+
+        var url = 'http://192.168.160.58/netflix/api/Categories/' + id;
+
+        //Pedido AJAX;
+        console.log("LIST: Id: " + id);
+        $.getJSON(url)
+            .done(function (data) {
+                self.CategoriesDetailsTitles(data.Titles);
+                self.CategoriesDetailsTitlesLength(data.Titles.length);
+
+                $('#categoriesDetailsId').text('(' + data.Id + ') ' + data.Name);
+                //Favoritos - Titles
+                var lst = data.Titles;
+                for (i = 0; i < lst.length; i++) {
+                    var id = 'Titles_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
+                console.log("LIST: DONE!");
+            })
+            .fail(function () {
+                console.log("LIST: FAIL!");
+            });
+
+        $('#categoriesDetailsModal').modal('show');
     });
 
     //-----Load Inicial

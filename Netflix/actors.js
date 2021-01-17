@@ -91,6 +91,7 @@
 
     self.TypesImg = ko.observableArray();
     self.TypesTitles = ko.observable();
+    self.TypesTitlesLength = ko.observable();
 
     //Imagens dos Types
     function typesImg() {
@@ -229,6 +230,7 @@
         $.getJSON(url)
             .done(function (data) {
                 self.TypesTitles(data.Titles);
+                self.TypesTitlesLength(data.Titles.length);
 
                 $('#typesId').text('(' + data.Id + ') ' + data.Name);
                 //Favoritos - Titles

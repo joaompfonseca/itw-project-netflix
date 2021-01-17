@@ -116,7 +116,7 @@
             </div>
         </div>
         <div class="container">
-            <table class="table table-dark table-striped">
+            <table class="table table-dark">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -132,7 +132,7 @@
                         <td class="align-text-bottom" data-bind="text: Titles"></td>
                         <td class="text-right">
                             <div class="btn-group">
-                                <a class="btn btn-outline-light" data-bind="attr:  {href: $parent.DataType().toLowerCase() + 'Details.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-outline-light typesDetails" data-bind="attr: {id: Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
                                 <a class="btn btn-outline-light" data-bind="attr: {id: $parent.DataType() +'_' + Id}, event: {click: $parent.Favourite}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
                             </div>
                         </td>
@@ -150,6 +150,40 @@
             </div>
         </div>
     </nav>
+    <!--typesModal-->
+    <div class="modal fade hide" id="typesModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header text-light">
+                    <h5 class="modal-title" id="typesId"></h5>
+                    <button class="btn text-light close" data-dismiss="modal" title="Fechar"><i class="fa fa-close"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: TypesTitlesLength"></span>)</h5>
+                                <hr />
+                                <div class="container" data-bind="foreach: TypesTitles">
+                                    <div class="row mb-1">
+                                        <div class="col-9">
+                                            <p><i class="fa fa-video-camera"></i> <span data-bind="text: Name"></span></p>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-light" data-bind="attr:{href: 'titlesDetails.html?id=' + Id}" title="Ver detalhes"><i class="fa fa-eye"></i></a>
+                                                <a class="btn btn-outline-light" data-bind="attr: {id: 'Titles_' + Id}, event: {click: $parent.FavouriteTitles}" title="Adicionar aos favoritos"><i class="fa fa-heart-o"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--Modal-->
     <div class="modal fade" id="modal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered w-25">

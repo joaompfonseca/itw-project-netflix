@@ -4,11 +4,7 @@
     //-----Arrays
     pagesizes = [
         { number: "10", value: 10 },
-        { number: "25", value: 25 },
-        { number: "50", value: 50 },
-        { number: "100", value: 100 },
-        { number: "250", value: 250 },
-        { number: "500", value: 500 }
+        { number: "20", value: 20 }
     ];
     sorting = [
         { method: 'Por nome', value: dataType },
@@ -52,6 +48,7 @@
 
     self.Sorting = ko.observable(dataType);
 
+    //Favoritos - Types
     self.Favourite = function () {
         var type = this;
         var id = dataType + '_' + this.Id;
@@ -63,6 +60,20 @@
             $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
         }
     };
+
+    //Favoritos - Titles
+    self.FavouriteTitles = function () {
+        var type = this;
+        var id = 'Titles_' + this.Id;
+        if (id in amplify.store()) {
+            amplify.store(id, null);
+            $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+        } else {
+            amplify.store(id, type);
+            $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+        }
+    };
+
     self.HideControls = ko.computed(function () {
         if ((self.Sorting() == 'Favourites') || !self.Unlock()) {
             return 'hidden';
@@ -77,6 +88,9 @@
             return 'visible';
         };
     });
+
+    self.TypesTitles = ko.observable();
+    self.TypesTitlesLength = ko.observable();
 
     //Update dataType Listing
     self.UpdateList = function () {
@@ -143,9 +157,43 @@
             });
     };
 
+    //-----typesModal
+    $(document).on("click", ".typesDetails", function () {
+        var id = $(this).attr('id');
+
+        var url = 'http://192.168.160.58/netflix/api/' + dataType + '/' + id;
+
+        //Pedido AJAX;
+        console.log("LIST: Id: " + id);
+        $.getJSON(url)
+            .done(function (data) {
+                self.TypesTitles(data.Titles);
+                self.TypesTitlesLength(data.Titles.length);
+
+                $('#typesId').text('(' + data.Id + ') ' + data.Name);
+                //Favoritos - Titles
+                var lst = data.Titles;
+                for (i = 0; i < lst.length; i++) {
+                    var id = 'Titles_' + lst[i].Id;
+                    if (id in amplify.store()) {
+                        $('#' + id).html("<i class='fa fa-heart' style='color: red'></i>");
+                    } else {
+                        $('#' + id).html("<i class='fa fa-heart-o' style=''></i>");
+                    };
+                };
+
+                console.log("LIST: DONE!");
+            })
+            .fail(function () {
+                console.log("LIST: FAIL!");
+            });
+
+        $('#typesModal').modal('show');
+    });
+
     //Update dataType Search
     self.UpdateSearch = function () {
-        if (self.Query().length > 2) {
+        if (self.Query().length > 0) {
             self.Unlock(false);
             var q = self.Query();
             var url = 'http://192.168.160.58/netflix/api/Search/' + dataType + '?name=' + q;
@@ -199,7 +247,7 @@ $(document).ready(function () {
                 }
                 $("#search").autocomplete({
                     delay: 0,
-                    minLength: 3,
+                    minLength: 1,
                     source: tips
                 });
 

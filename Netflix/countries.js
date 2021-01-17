@@ -87,6 +87,7 @@
 
     self.TypesImg = ko.observableArray();
     self.TypesTitles = ko.observable();
+    self.TypesTitlesLength = ko.observable();
 
     //Imagens dos Types
     function typesImg() {
@@ -224,6 +225,7 @@
         $.getJSON(url)
             .done(function (data) {
                 self.TypesTitles(data.Titles);
+                self.TypesTitlesLength(data.Titles.length);
 
                 $('#typesId').text('(' + data.Id + ') ' + data.Name);
                 //Favoritos - Titles
@@ -249,7 +251,7 @@
 
     //Update dataType Search
     self.UpdateSearch = function () {
-        if (self.Query().length > 2) {
+        if (self.Query().length > 0) {
             self.Unlock(false);
             var q = self.Query();
             var url = 'http://192.168.160.58/netflix/api/Search/' + dataType + '?name=' + q;
@@ -306,7 +308,7 @@ $(document).ready(function () {
                 }
                 $("#search").autocomplete({
                     delay: 0,
-                    minLength: 3,
+                    minLength: 1,
                     source: tips
                 });
 

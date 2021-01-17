@@ -159,7 +159,7 @@ input[type="search"]:focus {
 }
 /*---------------*/
 
-.countriesDetails {
+.countriesDetails, .categoriesDetails {
     cursor: pointer;
     text-decoration: underline;
 }

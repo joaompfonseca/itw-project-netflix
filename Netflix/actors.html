@@ -67,8 +67,8 @@
             <div class="row">
                 <div class="col-12 d-flex justify-content-end">
                     <div class="form-inline justify-content-end mb-2">
-                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideFilters}"
-                            <label class="mx-2 mb-2 col-form-label">Filtro</label>
+                        <div class="col-12 col-sm-auto form-inline justify-content-end" data-bind="style: {visibility: HideFilters}">
+                            <label class="mx-2 mb-2 col-form-label">Filtro </label>
                             <select data-bind="enable: Unlock,
                                     options: sorting,
                                     optionsText: 'method',
@@ -155,7 +155,7 @@
                                 <img class="img-fluid" id="typesImg" />
                             </div>
                             <div class="col-8">
-                                <h5><i class="fa fa-film"></i> Títulos</h5>
+                                <h5><i class="fa fa-film"></i> Títulos (<span data-bind="text: TypesTitlesLength"></span>)</h5>
                                 <hr />
                                 <div class="container" data-bind="foreach: TypesTitles">
                                     <div class="row mb-1">
