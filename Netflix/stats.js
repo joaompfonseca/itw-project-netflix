@@ -5,23 +5,39 @@
     google.load("visualization", "1.1", { packages: ["bar"] });
     google.setOnLoadCallback(drawStuff);
     function drawStuff() {
-        var data = new google.visualization.arrayToDataTable([
-            ["Tipo",''],
-            ["Títulos", 6234],
-            ["Atores", 27391],
-            ["Diretores", 3654],
-            ["Categorias", 42],
-            ["Países", 110]
-        ]);
-        var options = {
-            legend: { position: 'none' },
+        //Pedido AJAX
+        var url = 'http://192.168.160.58/netflix/api/Statistics'
 
-            bars: 'vertical',
-            bar: { groupWidth: "100%" },
-            colors: ['#ffffff'],
-        };
-        var chart = new google.charts.Bar(document.getElementById('chart'));
-        chart.draw(data, options);
+        $.get(url)
+            .done(function (data) {
+                var titles = data.Titles;
+                var actors = data.Actors;
+                var directors = data.Directors;
+                var categories = data.Categories;
+                var countries = data.Countries;
+
+                var data = new google.visualization.arrayToDataTable([
+                    ["Tipo", ''],
+                    ["Títulos", titles],
+                    ["Atores", actors],
+                    ["Diretores", directors],
+                    ["Categorias", categories],
+                    ["Países", countries]
+                ]);
+                var options = {
+                    legend: { position: 'none' },
+
+                    bars: 'vertical',
+                    bar: { groupWidth: "100%" },
+                    colors: ['#ffffff'],
+                };
+                var chart = new google.charts.Bar(document.getElementById('chart'));
+                chart.draw(data, options);
+
+                console.log("STATS: DONE!");
+        }).fail(function () {
+            console.log("STATS: FAIL!");
+        })
     };
 
     //-----PageLoading
