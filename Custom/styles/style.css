@@ -165,7 +165,19 @@ input[type="search"]:focus {
     max-width: 162px;
 }
 /*---------------*/
-
+/*Gráfico*/
+#chart {
+    width: 100%;
+    height: 70vh;
+    border: none;
+}
+rect {
+    fill: transparent;
+}
+#chart text {
+    fill: #fff !important;
+}
+/*---------------*/
 .countriesDetails, .categoriesDetails, .ratingsDetails {
     cursor: pointer;
     text-decoration: underline;
