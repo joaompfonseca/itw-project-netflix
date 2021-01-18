@@ -256,3 +256,10 @@ select:disabled {
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+.carousel-inner > .item > .carousel-image {
+    width: 100%;
+    height: 500px;
+    text-align: center;
+    align: center;
+}

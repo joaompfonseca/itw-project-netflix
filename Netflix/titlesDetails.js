@@ -110,7 +110,7 @@
                     nameQ.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/['"]+/g, '%27');
 
                     //Pedido AJAX
-                    $.get('https://thingproxy.freeboard.io/fetch/https://www.youtube.com/results?search_query=' + nameQ)
+                    $.get('https://cors-anywhere.herokuapp.com/https://www.youtube.com/results?search_query=' + nameQ)
                         .done(function (data) {
                             var posLink = data.search('"/watch') + 10;
                             var vidLink = data.slice(posLink, posLink + 11);
@@ -159,7 +159,7 @@
                     var i = 0;
                     var actorsImg = [];
                     function addActorImg() {
-                        var url = 'https://thingproxy.freeboard.io/fetch/http://www.adorocinema.com/busca/?q=';
+                        var url = 'https://cors-anywhere.herokuapp.com/http://www.adorocinema.com/busca/?q=';
                         var name = actorsQ[i];
                         var id = actors[i].Id;
                         //Pedido AJAX
@@ -220,7 +220,7 @@
                     var i = 0;
                     var directorsImg = [];
                     function addDirectorImg() {
-                        var url = 'https://thingproxy.freeboard.io/fetch/http://www.adorocinema.com/busca/?q=';
+                        var url = 'https://cors-anywhere.herokuapp.com/http://www.adorocinema.com/busca/?q=';
                         var name = directorsQ[i];
                         var id = directors[i].Id;
                         //Pedido AJAX
@@ -510,7 +510,7 @@ $(document).ready(function () {
 
     //-----titleBannerById
     function bannerById(id) {
-        var url = 'https://thingproxy.freeboard.io/fetch/http://www.netflix.com/pt/title/' + id; //https://cors-anywhere.herokuapp.com/ // https://thingproxy.freeboard.io/fetch/
+        var url = 'https://cors-anywhere.herokuapp.com/http://www.netflix.com/pt/title/' + id; //https://cors-anywhere.herokuapp.com/ // https://thingproxy.freeboard.io/fetch/
 
         //Pedido AJAX
         console.log("BANNER: Id: " + id)
